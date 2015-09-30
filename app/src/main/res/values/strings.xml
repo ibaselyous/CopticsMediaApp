@@ -2,4 +2,6 @@
     <string name="app_name">CopticsMedia</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="welcome_message">Jesus was telling them that they need to pray continuously and not to be discouraged</string>
+    <string name="let_us_pray">Let\'s Pray</string>
 </resources>

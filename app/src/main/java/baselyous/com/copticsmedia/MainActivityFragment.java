@@ -1,5 +1,6 @@
 package baselyous.com.copticsmedia;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+
+import baselyous.com.copticsmedia.mediaTasks.MediaListActivity;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -37,6 +40,8 @@ public class MainActivityFragment extends Fragment {
 
 
     public void startPraying() {
-        Log.i("Starting praying", "Reached");
+        Intent intent = new Intent(getActivity(), MediaListActivity.class);
+
+       getActivity().startActivity(intent);
     }
 }

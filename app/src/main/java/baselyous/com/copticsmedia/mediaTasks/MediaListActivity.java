@@ -57,15 +57,16 @@ public class MediaListActivity extends FragmentActivity
     /**
      * Callback method from {@link MediaListFragment.Callbacks}
      * indicating that the item with the given ID was selected.
+     * @param id
      */
     @Override
-    public void onItemSelected(String id) {
+    public void onItemSelected(int id) {
         if (mTwoPane) {
             // In two-pane mode, show the detail view in this activity by
             // adding or replacing the detail fragment using a
             // fragment transaction.
             Bundle arguments = new Bundle();
-            arguments.putString(MediaDetailFragment.ARG_ITEM_ID, id);
+            arguments.putString(MediaDetailFragment.ARG_ITEM_ID,"" +  id);
             MediaDetailFragment fragment = new MediaDetailFragment();
             fragment.setArguments(arguments);
             getSupportFragmentManager().beginTransaction()

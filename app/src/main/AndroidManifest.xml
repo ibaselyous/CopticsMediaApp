@@ -16,6 +16,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".mediaTasks.MediaListActivity"
+            android:label="@string/title_media_list" >
+        </activity>
+        <activity
+            android:name=".mediaTasks.MediaDetailActivity"
+            android:label="@string/title_media_detail"
+            android:parentActivityName=".mediaTasks.MediaListActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="baselyous.com.copticsmedia.mediaTasks.MediaListActivity" />
+        </activity>
     </application>
 
 </manifest>

@@ -4,4 +4,12 @@
     <string name="action_settings">Settings</string>
     <string name="welcome_message">Jesus was telling them that they need to pray continuously and not to be discouraged</string>
     <string name="let_us_pray">Let\'s Pray</string>
+    <string name="title_media_list">Medias</string>
+    <string name="title_media_detail">Media Detail</string>
+    <string name="agpya">Agpeya</string>
+    <string name="kholagy">Kholagy</string>
+    <string name="ebsalmodia">Ebsalmodia</string>
+    <string name="agpya_description">Daily hours prays</string>
+    <string name="kholagy_description">The book of Liturgy</string>
+    <string name="ebsalmodia_description">The book of midnight praises</string>
 </resources>

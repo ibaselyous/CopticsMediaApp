@@ -4,8 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
-
 import baselyous.com.copticsmedia.R;
+import baselyous.com.copticsmedia.mediaTasks.tasks.factory.MediaTaskFactory;
 
 /**
  * An activity representing a list of Medias. This activity
@@ -61,23 +61,22 @@ public class MediaListActivity extends FragmentActivity
      */
     @Override
     public void onItemSelected(int id) {
+
         if (mTwoPane) {
             // In two-pane mode, show the detail view in this activity by
             // adding or replacing the detail fragment using a
             // fragment transaction.
-            Bundle arguments = new Bundle();
-            arguments.putString(MediaDetailFragment.ARG_ITEM_ID,"" +  id);
-            MediaDetailFragment fragment = new MediaDetailFragment();
-            fragment.setArguments(arguments);
+
+            MediaDetailFragment mediaInterface = MediaTaskFactory.getFragment(id);
+
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.media_detail_container, fragment)
+                    .replace(R.id.media_detail_container, mediaInterface)
                     .commit();
 
         } else {
             // In single-pane mode, simply start the detail activity
             // for the selected item ID.
             Intent detailIntent = new Intent(this, MediaDetailActivity.class);
-            detailIntent.putExtra(MediaDetailFragment.ARG_ITEM_ID, id);
             startActivity(detailIntent);
         }
     }

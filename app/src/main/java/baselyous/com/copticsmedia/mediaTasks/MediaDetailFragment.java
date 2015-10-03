@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import baselyous.com.copticsmedia.R;
+import baselyous.com.copticsmedia.mediaTasks.tasks.MediaInterface;
 
 /**
  * A fragment representing a single Media detail screen.
@@ -14,7 +15,7 @@ import baselyous.com.copticsmedia.R;
  * in two-pane mode (on tablets) or a {@link MediaDetailActivity}
  * on handsets.
  */
-public class MediaDetailFragment extends Fragment {
+public class MediaDetailFragment extends Fragment implements MediaInterface {
     /**
      * The fragment argument representing the item ID that this fragment
      * represents.

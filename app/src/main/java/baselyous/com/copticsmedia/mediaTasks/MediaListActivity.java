@@ -2,7 +2,7 @@ package baselyous.com.copticsmedia.mediaTasks;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.ActionBarActivity;
 
 import baselyous.com.copticsmedia.R;
 import baselyous.com.copticsmedia.mediaTasks.tasks.factory.MediaTaskFactory;
@@ -23,7 +23,7 @@ import baselyous.com.copticsmedia.mediaTasks.tasks.factory.MediaTaskFactory;
  * {@link MediaListFragment.Callbacks} interface
  * to listen for item selections.
  */
-public class MediaListActivity extends FragmentActivity
+public class MediaListActivity extends ActionBarActivity
         implements MediaListFragment.Callbacks {
 
     /**
@@ -57,7 +57,7 @@ public class MediaListActivity extends FragmentActivity
     /**
      * Callback method from {@link MediaListFragment.Callbacks}
      * indicating that the item with the given ID was selected.
-     * @param id
+     * @param id item selected
      */
     @Override
     public void onItemSelected(int id) {
@@ -76,8 +76,12 @@ public class MediaListActivity extends FragmentActivity
         } else {
             // In single-pane mode, simply start the detail activity
             // for the selected item ID.
-            Intent detailIntent = new Intent(this, MediaDetailActivity.class);
-            startActivity(detailIntent);
+
+            MediaDetailActivity activity = MediaTaskFactory.getActivity(id);
+            if (activity != null) {
+                Intent detailIntent = new Intent(this, activity.getClass());
+                startActivity(detailIntent);
+            }
         }
     }
 }

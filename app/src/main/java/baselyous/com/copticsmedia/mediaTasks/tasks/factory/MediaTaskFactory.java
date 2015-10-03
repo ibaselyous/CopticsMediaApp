@@ -11,6 +11,7 @@ import baselyous.com.copticsmedia.mediaTasks.tasks.Kholagy.KholagyFragment;
 
 /**
  * Created by Ihab Baselyous on 03.10.2015.
+ *
  */
 public class MediaTaskFactory {
     public static final int AGPEYA = 0;
@@ -29,7 +30,7 @@ public class MediaTaskFactory {
                 return new EbsalmodiaFragment();
             }
             default: {
-                return new MediaDetailFragment();
+                return null;
             }
         }
     }
@@ -46,7 +47,7 @@ public class MediaTaskFactory {
                 return new EbsalmodiaDetailActivity();
             }
             default: {
-                return new MediaDetailActivity();
+                return null;
             }
         }
     }

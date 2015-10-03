@@ -12,4 +12,5 @@
     <string name="agpya_description">Daily hours prays</string>
     <string name="kholagy_description">The book of Liturgy</string>
     <string name="ebsalmodia_description">The book of midnight praises</string>
+    <string name="title_activity_root">RootActivity</string>
 </resources>

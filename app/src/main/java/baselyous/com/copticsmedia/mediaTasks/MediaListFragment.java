@@ -46,9 +46,9 @@ public class MediaListFragment extends ListFragment {
     public interface Callbacks {
         /**
          * Callback for when an item has been selected.
-         * @param id
+         * @param id item clicked id
          */
-        public void onItemSelected(int id);
+        void onItemSelected(int id);
     }
 
     /**

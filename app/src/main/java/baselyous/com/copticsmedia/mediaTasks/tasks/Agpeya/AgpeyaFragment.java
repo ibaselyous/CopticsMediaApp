@@ -1,6 +1,6 @@
 package baselyous.com.copticsmedia.mediaTasks.tasks.Agpeya;
 
-import android.util.Log;
+import java.util.List;
 
 import baselyous.com.copticsmedia.mediaTasks.MediaDetailFragment;
 import baselyous.com.copticsmedia.mediaTasks.tasks.MediaContents;
@@ -19,15 +19,13 @@ public class AgpeyaFragment extends MediaDetailFragment {
 
     @Override
     protected MediaContents getMediaContents() {
-        MediaContents mediaContents = ResourceManagement.readAgpeyaContents(getActivity(), "arabic");
+        return ResourceManagement.readAgpeyaContents(getActivity(), "arabic");
 
+    }
 
-        for (String title : mediaContents.getTitleList()) {
-            Log.i("title found ", "" + title);
-        }
-
-        return mediaContents;
-
+    @Override
+    public List<String> getBookContents(String selectedLanguge) {
+        return ResourceManagement.readAgeyaContentsByLanguage(getActivity(), selectedLanguge);
     }
 
 

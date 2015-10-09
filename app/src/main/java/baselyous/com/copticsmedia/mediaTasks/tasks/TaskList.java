@@ -9,6 +9,7 @@ import baselyous.com.copticsmedia.R;
 
 /**
  * Created by Ihab Baselyous on 02.10.2015.
+ * defines a list of tasks
  */
 public class TaskList {
     private String taskName;
@@ -47,9 +48,9 @@ public class TaskList {
 
     public static List<TaskList> getTaskList(Context context) {
         List<TaskList> taskList = new ArrayList<>();
-        taskList.add(new TaskList(context.getString(R.string.agpya), R.drawable.agpya, context.getString(R.string.agpya_description)));
-        taskList.add(new TaskList(context.getString(R.string.kholagy), R.drawable.kholagy, context.getString(R.string.kholagy_description)));
-        taskList.add(new TaskList(context.getString(R.string.ebsalmodia), R.drawable.ibsalmodia, context.getString(R.string.ebsalmodia_description)));
+        taskList.add(new TaskList(context.getString(R.string.agpya), R.drawable.gold_logo, context.getString(R.string.agpya_description)));
+        taskList.add(new TaskList(context.getString(R.string.kholagy), R.drawable.gold_logo, context.getString(R.string.kholagy_description)));
+        taskList.add(new TaskList(context.getString(R.string.ebsalmodia), R.drawable.gold_logo, context.getString(R.string.ebsalmodia_description)));
 
         return taskList;
     }

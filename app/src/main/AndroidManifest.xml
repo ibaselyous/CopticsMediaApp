@@ -9,7 +9,8 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -21,14 +22,16 @@
             android:label="@string/title_media_list"
             android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
         </activity>
-        <!--<activity
+        <!--
+        <activity
             android:name=".mediaTasks.MediaDetailActivity"
             android:label="@string/title_media_detail"
             android:parentActivityName=".mediaTasks.MediaListActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="baselyous.com.copticsmedia.mediaTasks.MediaListActivity" />
-        </activity>-->
+        </activity>
+        -->
         <activity
             android:name=".mediaTasks.tasks.Agpeya.AgpeyaDetailActivity"
             android:label="@string/agpya" />
@@ -38,10 +41,8 @@
         <activity
             android:name=".mediaTasks.tasks.Kholagy.KholagyDetailActivity"
             android:label="@string/kholagy" />
-        <activity
-            android:name=".nonUsedCode.ContentsPreview"
-            android:label="@string/title_activity_contents_preview">
-        </activity>
+        <activity android:name=".mediaTasks.TaskContentSelector" />
+
     </application>
 
 </manifest>

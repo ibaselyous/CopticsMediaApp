@@ -8,15 +8,15 @@ package baselyous.com.copticsmedia.adapters;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.util.Log;
 
-import java.util.Locale;
+import java.util.List;
+import java.util.Stack;
 
 import baselyous.com.copticsmedia.mediaTasks.tasks.MediaContents;
 import baselyous.com.copticsmedia.mediaTasks.tasks.PlaceholderFragment;
 
 /**
- * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
+ * A {@link FragmentPagerAdapter} that returns a fragmentStack corresponding to
  * one of the sections/tabs/pages.
  */
 public class SectionsPagerAdapter extends FragmentPagerAdapter {
@@ -24,21 +24,23 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     private final FragmentActivity activity;
     private int task;
     private MediaContents mediaContents;
+    private List<Fragment> fragmentStack = new Stack<>();
+
 
     public SectionsPagerAdapter(FragmentActivity activity, int task, MediaContents mediaContents) {
         super(activity.getSupportFragmentManager());
         this.activity = activity;
         this.task = task;
         this.mediaContents = mediaContents;
-        for (String title : mediaContents.getTitleList()) {
-            Log.i("title found ", "" + title);
-        }
+
     }
 
 
     @Override
     public Fragment getItem(int position) {
-        return PlaceholderFragment.newInstance(position, mediaContents);
+        Fragment currentFragment = PlaceholderFragment.newInstance(position, mediaContents);
+        fragmentStack.add(currentFragment);
+        return currentFragment;
     }
 
     @Override
@@ -51,19 +53,14 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        Locale l = Locale.getDefault();
-        /*switch (position) {
-            case 0:
-                return activity.getString(R.string.title_section1).toUpperCase(l);
-            case 1:
-                return activity.getString(R.string.title_section2).toUpperCase(l);
-            case 2:
-                return activity.getString(R.string.title_section3).toUpperCase(l);
-        }
-        */
         if (mediaContents != null && mediaContents.getTitleList() != null && !mediaContents.getTitleList().isEmpty())
             return mediaContents.getTitleList().get(position);
 
         return null;
+    }
+
+
+    public List<Fragment> getFragmentStack() {
+        return fragmentStack;
     }
 }

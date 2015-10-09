@@ -20,46 +20,141 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/fullscreen_content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context="baselyous.com.copticsmedia.nonUsedCode.ContentsPreview" />
+        android:layout_height="match_parent" />
 
     <!-- This FrameLayout insets its children based on system windows using
          android:fitsSystemWindows. -->
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true">
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/previewControl"
+        android:src="@android:drawable/arrow_up_float"
+        android:padding="5dp"
+        android:layout_gravity="bottom|center_horizontal"
+        android:contentDescription="@string/app_name" />
 
-        <LinearLayout
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        android:layout_gravity="left|top">
+
+        <RelativeLayout
             android:id="@+id/fullscreen_content_controls"
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center_horizontal"
-            android:background="@color/black_overlay"
             android:orientation="horizontal"
             tools:ignore="UselessParent"
             android:gravity="center"
-            android:padding="10dp">
+            android:padding="10dp"
+            android:background="@drawable/gradient">
+
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/textControllerLayout"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignTop="@+id/hideControls"
+                android:layout_alignParentTop="true"
+                android:gravity="fill_horizontal|center"
+                android:background="@drawable/border">
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:id="@+id/light"
+                    android:src="@drawable/sun"
+                    android:contentDescription="@string/app_name"
+                    android:paddingRight="5dp" />
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:id="@+id/dark"
+                    android:src="@drawable/moon"
+                    android:contentDescription="@string/app_name"
+                    android:paddingLeft="5dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textControllerLayout"
+                android:showDividers="middle|beginning|end"
+                android:padding="15dp"
+                android:background="@drawable/border"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignTop="@+id/hideControls"
+                android:layout_alignParentTop="true">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="@string/a"
+                    android:id="@+id/increaseFontSize"
+                    android:textSize="36sp"
+                    android:paddingRight="5dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="@string/a"
+                    android:id="@+id/decreaseFontSize"
+                    android:textSize="18sp"
+                    android:paddingLeft="5dp" />
+
+            </LinearLayout>
 
             <Spinner
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/languageSpinner"
                 android:entries="@array/languages"
-                android:layout_weight="1" />
+                android:layout_below="@+id/textControllerLayout"
+                android:layout_marginTop="10dp"
+                android:background="#4Effffff" />
 
             <Spinner
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/bookContents"
-                android:layout_weight="1" />
+                android:layout_gravity="center"
+                android:layout_below="@+id/languageSpinner"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentLeft="true"
+                android:layout_marginTop="10dp"
+                android:background="#4Effffff" />
 
             <Spinner
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/bookSubContents"
-                android:layout_weight="1" />
-        </LinearLayout>
+                android:layout_gravity="left|top"
+                android:layout_below="@+id/bookContents"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="10dp"
+                android:background="#4Effffff" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/hideControls"
+                android:src="@android:drawable/arrow_down_float"
+                android:padding="10dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:contentDescription="@string/app_name" />
+
+        </RelativeLayout>
 
     </FrameLayout>
 

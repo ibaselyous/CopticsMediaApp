@@ -1,5 +1,7 @@
 package baselyous.com.copticsmedia.mediaTasks.tasks.Ebsalmodia;
 
+import java.util.List;
+
 import baselyous.com.copticsmedia.mediaTasks.MediaDetailFragment;
 import baselyous.com.copticsmedia.mediaTasks.tasks.MediaContents;
 
@@ -17,6 +19,11 @@ public class EbsalmodiaFragment extends MediaDetailFragment {
 
     @Override
     protected MediaContents getMediaContents() {
+        return null;
+    }
+
+    @Override
+    public List<String> getBookContents(String selectedLanguge) {
         return null;
     }
 }

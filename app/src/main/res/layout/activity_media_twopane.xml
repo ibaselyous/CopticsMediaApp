@@ -7,7 +7,7 @@
     tools:context="baselyous.com.copticsmedia.mediaTasks.MediaListActivity">
 
     <!--
-    This layout is a two-pane layout for the Medias
+    This layout is a two-pane layout for the Media
     master/detail flow.
     See res/values-large/refs.xml and
     res/values-sw600dp/refs.xml for an example of layout aliases

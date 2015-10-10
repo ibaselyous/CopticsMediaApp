@@ -1,0 +1,10 @@
+﻿Prime
+Terce
+Sext
+None
+Vespres
+Compline
+Veil
+Midnight 1
+Midnight 2
+Midnight 3

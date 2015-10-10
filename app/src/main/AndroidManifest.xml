@@ -33,13 +33,13 @@
         </activity>
         -->
         <activity
-            android:name=".mediaTasks.tasks.Agpeya.AgpeyaDetailActivity"
+            android:name=".mediaTasks.tasks.agpeya.AgpeyaDetailActivity"
             android:label="@string/agpya" />
         <activity
-            android:name=".mediaTasks.tasks.Ebsalmodia.EbsalmodiaDetailActivity"
+            android:name=".mediaTasks.tasks.ebsalmodia.EbsalmodiaDetailActivity"
             android:label="@string/ebsalmodia" />
         <activity
-            android:name=".mediaTasks.tasks.Kholagy.KholagyDetailActivity"
+            android:name=".mediaTasks.tasks.kholagy.KholagyDetailActivity"
             android:label="@string/kholagy" />
         <activity android:name=".mediaTasks.TaskContentSelector" />
         <activity android:name=".preferences.LanguagePreference" />

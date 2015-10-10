@@ -2,6 +2,7 @@ package baselyous.com.copticsmedia.recources;
 
 import android.content.Context;
 import android.content.res.AssetManager;
+import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -20,20 +21,25 @@ import baselyous.com.copticsmedia.mediaTasks.tasks.MediaContents;
 public class ResourceManagement {
 
 
-    public static MediaContents readAgpeyaContents(Context context, String language) {
+    public static MediaContents readMediaTaskContents(Context context, String task, String language, String taskContentFolder) {
         MediaContents contents = new MediaContents();
         AssetManager assets = context.getAssets();
         try {
-            String[] list = assets.list("agpeya/" + language);
+
+            String filePath = "" +
+                    (task.isEmpty() ? "" : task + "/") +
+                    (language.isEmpty() ? "" : language + "/") +
+                    (taskContentFolder.isEmpty() ? "" : taskContentFolder);
+            Log.i("reached get media ", filePath);
+            String[] list = assets.list(filePath);
             for (String fileName : list) {
                 if (!fileName.equals("salawat.txt")) {
-                    InputStream is = assets.open("agpeya/" + language + "/" + fileName);
+                    InputStream is = assets.open(filePath + "/" + fileName);
                     String str;
                     try {
                         Media media = new Media();
                         BufferedReader reader = new BufferedReader(new InputStreamReader(is));
                         StringBuilder content = new StringBuilder();
-
                         String title = reader.readLine();
                         media.setTitle(title);
                         content.append(title).append("\n");
@@ -57,21 +63,40 @@ public class ResourceManagement {
         return contents;
     }
 
-    public static List<String> readAgeyaContentsByLanguage(Context context, String selectedLanguage) {
+
+    // used to read a file an convert it to arrayList of stings.
+
+    /**
+     * for example Agpeya, arabic, file
+     *
+     * @param context          context used to acquire service
+     * @param task             task (book)
+     * @param selectedLanguage language
+     * @param taskFileName     file name
+     * @return file contents as a list
+     */
+    public static List<String> readTaskContentsFile(Context context, String task, String selectedLanguage, String taskContentFolder, String taskFileName) {
 
         AssetManager assets = context.getAssets();
         List<String> contents = new ArrayList<>();
-
         try {
 
-            InputStream is = assets.open("agpeya/" + selectedLanguage.toLowerCase() + "/salawat.txt");
+            String filePath = "" +
+                    (task.isEmpty() ? "" : task + "/") +
+                    (selectedLanguage.isEmpty() ? "" : selectedLanguage.toLowerCase() + "/") +
+                    (taskContentFolder.isEmpty() ? "" : taskContentFolder.toLowerCase() + "/") +
+                    (taskFileName.isEmpty() ? "" : taskFileName.toLowerCase() + ".txt");
+
+            Log.i("bath to file ", filePath);
+
+            InputStream is = assets.open(filePath);
             String str;
             try {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+
                 while ((str = reader.readLine()) != null) {
                     contents.add(str);
                 }
-
             } finally {
                 try {
                     is.close();
@@ -84,5 +109,6 @@ public class ResourceManagement {
         }
         return contents;
     }
+
 
 }

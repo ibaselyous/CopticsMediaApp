@@ -40,4 +40,7 @@
     <string name="title_content_detail">Content Detail</string>
     <string name="title_item_list">Items</string>
     <string name="title_item_detail">Item Detail</string>
+    <string name="please_select_your_language_preference">Please select your language preference</string>
+    <string name="language">Language</string>
+    <string name="update">Update</string>
 </resources>

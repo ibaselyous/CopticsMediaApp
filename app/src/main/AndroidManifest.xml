@@ -42,7 +42,7 @@
             android:name=".mediaTasks.tasks.Kholagy.KholagyDetailActivity"
             android:label="@string/kholagy" />
         <activity android:name=".mediaTasks.TaskContentSelector" />
-
+        <activity android:name=".preferences.LanguagePreference" />
     </application>
 
 </manifest>

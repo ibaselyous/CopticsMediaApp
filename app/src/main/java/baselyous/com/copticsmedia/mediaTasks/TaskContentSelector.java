@@ -1,46 +1,62 @@
 package baselyous.com.copticsmedia.mediaTasks;
 
+import android.app.ListActivity;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import baselyous.com.copticsmedia.adapters.AppBaseAdapter.taskListAdapter.TaskListAdapter;
+import baselyous.com.copticsmedia.mediaTasks.tasks.TaskList;
 
 /**
  * Created by Ihab Baselyous on 09.10.2015.
  * select a pray from the prayList
  */
-public class TaskContentSelector extends FragmentActivity implements AdapterView.OnItemClickListener {
+public class TaskContentSelector extends ListActivity {
 
 
-    private ListView list;
+    private ArrayList<String> contentList;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(android.R.layout.list_content);
-        list = (ListView) findViewById(android.R.id.list);
-        list.setOnItemClickListener(this);
-        list.setBackgroundColor(Color.BLACK);
         Intent intent = getIntent();
         if (intent == null) {
             finish();
         }
         if (intent != null && intent.hasExtra("content")) {
-            ArrayList<String> contentList = intent.getStringArrayListExtra("content");
-            ArrayAdapter<String> adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1, contentList);
-            list.setAdapter(adapter);
+            contentList = intent.getStringArrayListExtra("content");
+            if (intent.hasExtra("task")) {
+                String task = intent.getExtras().getString("task");
+                if (task != null && task.equals("agpeya")) {
+                    TaskListAdapter adapter = new TaskListAdapter(getTaskList(intent.getIntegerArrayListExtra("icons")), getApplicationContext());
+                    setListAdapter(adapter);
+                } else {
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1, contentList);
+                    setListAdapter(adapter);
+                }
+            }
         }
     }
 
+    private List<TaskList> getTaskList(ArrayList<Integer> iconList) {
+        List<TaskList> taskList = new ArrayList<>();
+        for (int i = 0; i < contentList.size(); i++) {
+            taskList.add(new TaskList(contentList.get(i), iconList.get(i), ""));
+        }
+        return taskList;
+    }
+
+
     @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+    protected void onListItemClick(ListView l, View v, int position, long id) {
         Intent intent = new Intent();
+        intent.putExtra("itemClickedString", contentList.get(position));
         intent.putExtra("itemClicked", position);
         setResult(RESULT_OK, intent);
         finish();

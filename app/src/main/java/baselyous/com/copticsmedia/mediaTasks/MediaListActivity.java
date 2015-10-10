@@ -1,11 +1,15 @@
 package baselyous.com.copticsmedia.mediaTasks;
 
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import baselyous.com.copticsmedia.R;
 import baselyous.com.copticsmedia.mediaTasks.tasks.factory.MediaTaskFactory;
+import baselyous.com.copticsmedia.preferences.LanguagePreference;
 
 /**
  * An activity representing a list of Medias. This activity
@@ -36,6 +40,7 @@ public class MediaListActivity extends ActionBarActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_media_list);
+
 
         if (findViewById(R.id.media_detail_container) != null) {
             // The detail container view will be present only in the
@@ -83,5 +88,28 @@ public class MediaListActivity extends ActionBarActivity
                 startActivity(detailIntent);
             }
         }
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        getMenuInflater().inflate(R.menu.menu_root, menu);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.action_settings: {
+                Intent intent = new Intent(this, LanguagePreference.class);
+                startActivity(intent);
+                return true;
+            }
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

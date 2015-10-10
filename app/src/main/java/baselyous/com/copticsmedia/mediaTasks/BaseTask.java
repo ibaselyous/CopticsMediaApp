@@ -9,11 +9,14 @@ import android.support.v4.app.Fragment;
 import java.util.ArrayList;
 import java.util.List;
 
+import baselyous.com.copticsmedia.MainActivityFragment;
+import baselyous.com.copticsmedia.mediaTasks.tasks.MediaInterface;
+
 /**
  * Created by Ihab Baselyous on 09.10.2015.
  * base for all tasks
  */
-public abstract class BaseTask extends Fragment {
+public abstract class BaseTask extends Fragment implements MediaInterface {
 
     public static final String APP_SHARED_PREFERENCES_NAME = "com.baselyous.copticMedia.shared_preferences";
 
@@ -30,8 +33,12 @@ public abstract class BaseTask extends Fragment {
 
 
     public void selectTaskContent() {
+        String baseLanguage = MainActivityFragment.languageSelected(getActivity());
+
         Intent intent = new Intent(getActivity(), TaskContentSelector.class);
-        intent.putStringArrayListExtra("content", (ArrayList<String>) getBookContents("arabic"));
+        intent.putStringArrayListExtra("content", (ArrayList<String>) getBookContents(baseLanguage.toLowerCase()));
+        intent.putIntegerArrayListExtra("icons", (ArrayList<Integer>) getBookContentIconList());
+        intent.putExtra("task", getTaskName());
         startActivityForResult(intent, TASK_CONTENT_SELECTOR);
     }
 
@@ -42,8 +49,10 @@ public abstract class BaseTask extends Fragment {
             case TASK_CONTENT_SELECTOR: {
                 switch (resultCode) {
                     case Activity.RESULT_OK: {
+                        String itemClickedString = data.getExtras().getString("itemClickedString");
                         int itemIndex = data.getExtras().getInt("itemClicked");
-                        loadBookItemSelected(itemIndex);
+                        String defaultLanguage = MainActivityFragment.languageSelected(getActivity());
+                        loadBookItemSelected(defaultLanguage.toLowerCase(), itemClickedString, itemIndex);
                     }
                     break;
                 }
@@ -52,8 +61,9 @@ public abstract class BaseTask extends Fragment {
         }
     }
 
-    protected abstract void loadBookItemSelected(int itemIndex);
-
+    protected abstract void loadBookItemSelected(String language, String itemIndex, int index);
 
     public abstract List<String> getBookContents(String selectedLanguage);
+
+    public abstract List<Integer> getBookContentIconList();
 }

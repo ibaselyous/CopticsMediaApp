@@ -8,6 +8,7 @@ package baselyous.com.copticsmedia.adapters;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 
 import java.util.List;
 import java.util.Stack;
@@ -19,7 +20,7 @@ import baselyous.com.copticsmedia.mediaTasks.tasks.PlaceholderFragment;
  * A {@link FragmentPagerAdapter} that returns a fragmentStack corresponding to
  * one of the sections/tabs/pages.
  */
-public class SectionsPagerAdapter extends FragmentPagerAdapter {
+public class SectionsPagerAdapter extends FragmentStatePagerAdapter {
 
     private final FragmentActivity activity;
     private int task;

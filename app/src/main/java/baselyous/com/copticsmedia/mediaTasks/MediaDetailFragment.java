@@ -7,7 +7,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,10 +19,10 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import baselyous.com.copticsmedia.MainActivityFragment;
 import baselyous.com.copticsmedia.R;
 import baselyous.com.copticsmedia.adapters.SectionsPagerAdapter;
 import baselyous.com.copticsmedia.mediaTasks.tasks.MediaContents;
-import baselyous.com.copticsmedia.mediaTasks.tasks.MediaInterface;
 import baselyous.com.copticsmedia.mediaTasks.tasks.PlaceholderFragment;
 
 /**
@@ -32,7 +31,7 @@ import baselyous.com.copticsmedia.mediaTasks.tasks.PlaceholderFragment;
  * in two-pane mode (on tablets) or a {@link MediaDetailActivity}
  * on handsets.
  */
-public abstract class MediaDetailFragment extends BaseTask implements MediaInterface {
+public abstract class MediaDetailFragment extends BaseTask {
 
 
     public static final String CONTROLLER_BACKGROUND_COLOR = "com.baselyous.copticMedia.shared.preferences.controller.view.background.color";
@@ -48,7 +47,17 @@ public abstract class MediaDetailFragment extends BaseTask implements MediaInter
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ImageView sun;
     private ImageView moon;
+    private TextView updateContents;
 
+
+    public MediaDetailFragment() {
+
+    }
+
+    public static float getPx(Context activity, int value) {
+        Resources r = activity.getResources();
+        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, value, r.getDisplayMetrics());
+    }
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -57,11 +66,7 @@ public abstract class MediaDetailFragment extends BaseTask implements MediaInter
 
     protected abstract int getTask();
 
-    protected abstract MediaContents getMediaContents();
-
-    public MediaDetailFragment() {
-
-    }
+    protected abstract MediaContents getMediaContents(String language, String itemClicked);
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -69,26 +74,35 @@ public abstract class MediaDetailFragment extends BaseTask implements MediaInter
         View rootView = inflater.inflate(R.layout.activity_task_previewer, container, false);
         getViews(rootView);
         initController();
-        selectTaskContent();
+        initSpinnersWithDefaults();
+        setOnSpinnerChangeListener();
+        setOnUpdateBtnClickListener();
         return rootView;
     }
 
-    public void loadBookItemSelected(int itemClicked) {
-
+    private void initSpinnersWithDefaults() {
+        String defaultLanguage = MainActivityFragment.languageSelected(getActivity());
+        updateContents(defaultLanguage, "paker");
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        updateContents();
-        setOnSpinnerChangeListener();
+        selectTaskContent();
     }
 
-    private MediaContents updateContents() {
-        MediaContents contents = getMediaContents();
+    @Override
+    protected void loadBookItemSelected(String language, String itemClicked, int index) {
+        updateContents(language, getItemAssetDirectory(index));
+        //bookContentsSpinner.setSelection(index);
+    }
+
+    protected abstract String getItemAssetDirectory(int index);
+
+    private void updateContents(String defaultLanguage, String book) {
+        MediaContents contents = getMediaContents(defaultLanguage.toLowerCase(), book);
         updateViewPagerContents(contents);
         updateSpinners(contents);
-        return contents;
     }
 
     private void setOnSpinnerChangeListener() {
@@ -103,8 +117,19 @@ public abstract class MediaDetailFragment extends BaseTask implements MediaInter
 
             }
         });
+
     }
 
+    public void setOnUpdateBtnClickListener() {
+        updateContents.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int index = bookContentsSpinner.getSelectedItemPosition();
+                updateContents((String) languageSpinner.getSelectedItem(), getItemAssetDirectory(index));
+                bookContentsSpinner.setSelection(index);
+            }
+        });
+    }
 
     private void updateSpinners(MediaContents contents) {
         updateLanguageSpinner();
@@ -120,12 +145,17 @@ public abstract class MediaDetailFragment extends BaseTask implements MediaInter
         }
     }
 
-
     private void updateLanguageSpinner() {
         if (languageSpinner != null) {
             String[] languages = getResources().getStringArray(R.array.languages);
             ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(getActivity(), R.layout.spinner_custom_text, languages);
             languageSpinner.setAdapter(spinnerAdapter);
+            String defaultValue = MainActivityFragment.languageSelected(getActivity());
+            for (int i = 0; i < languages.length; i++) {
+                if (languageSpinner.getItemAtPosition(i).equals(defaultValue)) {
+                    languageSpinner.setSelection(i);
+                }
+            }
         }
     }
 
@@ -137,6 +167,11 @@ public abstract class MediaDetailFragment extends BaseTask implements MediaInter
     }
 
     private void updateViewPagerContents(MediaContents contents) {
+        if (mSectionsPagerAdapter != null) {
+            mSectionsPagerAdapter = null;
+            mViewPager.setAdapter(null);
+        }
+
         mSectionsPagerAdapter = new SectionsPagerAdapter(getActivity(), getTask(), contents);
         mViewPager.setAdapter(mSectionsPagerAdapter);
         mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -148,7 +183,6 @@ public abstract class MediaDetailFragment extends BaseTask implements MediaInter
             @Override
             public void onPageSelected(int position) {
                 changeBookSubContentsSpinner(position);
-                Log.i("reached page selected", " " + position);
             }
 
             @Override
@@ -156,6 +190,8 @@ public abstract class MediaDetailFragment extends BaseTask implements MediaInter
 
             }
         });
+
+        mSectionsPagerAdapter.notifyDataSetChanged();
     }
 
     private void changeBookSubContentsSpinner(int position) {
@@ -176,6 +212,7 @@ public abstract class MediaDetailFragment extends BaseTask implements MediaInter
         moon = (ImageView) rootView.findViewById(R.id.dark);
         increaseFontsize = (TextView) rootView.findViewById(R.id.increaseFontSize);
         decreaseFontsize = (TextView) rootView.findViewById(R.id.decreaseFontSize);
+        updateContents = (TextView) rootView.findViewById(R.id.updateContents);
         setViewsOnClickListener();
 
     }
@@ -193,6 +230,41 @@ public abstract class MediaDetailFragment extends BaseTask implements MediaInter
         decreaseFontsize.setOnClickListener(new TextWorkerInterface(false, true));
         sun.setOnClickListener(new TextWorkerInterface(false, false));
         moon.setOnClickListener(new TextWorkerInterface(true, false));
+    }
+
+    private void changeTextColorAndBackground(boolean value) {
+        Fragment fragment = mSectionsPagerAdapter.getFragmentStack().get(mViewPager.getCurrentItem());
+        TextView textView = ((PlaceholderFragment) fragment).getTextView();
+        View rootView = ((PlaceholderFragment) fragment).getRootView();
+        textView.setTextColor(value ? Color.WHITE : Color.BLACK);
+        rootView.setBackgroundColor(value ? Color.BLACK : Color.WHITE);
+        controlsView.setBackgroundResource(value ? R.drawable.gradient_light : R.drawable.gradient);
+
+        if (getActivity() != null) {
+            SharedPreferences.Editor editor = getEditor(getActivity());
+            editor.putInt(PlaceholderFragment.TEXT_VIEW_COLOR, value ? Color.WHITE : Color.BLACK);
+            editor.putInt(PlaceholderFragment.ROOT_VIEW_BACKGROUND_COLOR, value ? Color.BLACK : Color.WHITE);
+            editor.putInt(CONTROLLER_BACKGROUND_COLOR, value ? R.drawable.gradient_light : R.drawable.gradient);
+
+            editor.commit();
+        }
+
+
+    }
+
+    private void changeTextFontSize(boolean isIncrease) {
+        float px = getPx(getActivity(), 1);
+        Fragment fragment = mSectionsPagerAdapter.getFragmentStack().get(mViewPager.getCurrentItem());
+        TextView textView = ((PlaceholderFragment) fragment).getTextView();
+        if (textView != null) {
+            float currentSize = textView.getTextSize();
+            textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, isIncrease ? (currentSize + px) : (currentSize - px));
+            if (getActivity() != null) {
+                SharedPreferences.Editor editor = getEditor(getActivity());
+                editor.putFloat(PlaceholderFragment.TEXT_VIEW_SIZE, textView.getTextSize());
+                editor.commit();
+            }
+        }
     }
 
     public class ViewHideControllerOnClick implements View.OnClickListener {
@@ -232,46 +304,6 @@ public abstract class MediaDetailFragment extends BaseTask implements MediaInter
                 changeTextColorAndBackground(isIncrease);
             }
         }
-    }
-
-    private void changeTextColorAndBackground(boolean value) {
-        Fragment fragment = mSectionsPagerAdapter.getFragmentStack().get(mViewPager.getCurrentItem());
-        TextView textView = ((PlaceholderFragment) fragment).getTextView();
-        View rootView = ((PlaceholderFragment) fragment).getRootView();
-        textView.setTextColor(value ? Color.WHITE : Color.BLACK);
-        rootView.setBackgroundColor(value ? Color.BLACK : Color.WHITE);
-        controlsView.setBackgroundResource(value ? R.drawable.gradient_light : R.drawable.gradient);
-
-        if (getActivity() != null) {
-            SharedPreferences.Editor editor = getEditor(getActivity());
-            editor.putInt(PlaceholderFragment.TEXT_VIEW_COLOR, value ? Color.WHITE : Color.BLACK);
-            editor.putInt(PlaceholderFragment.ROOT_VIEW_BACKGROUND_COLOR, value ? Color.BLACK : Color.WHITE);
-            editor.putInt(CONTROLLER_BACKGROUND_COLOR, value ? R.drawable.gradient_light : R.drawable.gradient);
-
-            editor.commit();
-        }
-
-
-    }
-
-    private void changeTextFontSize(boolean isIncrease) {
-        float px = getPx(getActivity(), 1);
-        Fragment fragment = mSectionsPagerAdapter.getFragmentStack().get(mViewPager.getCurrentItem());
-        TextView textView = ((PlaceholderFragment) fragment).getTextView();
-        if (textView != null) {
-            float currentSize = textView.getTextSize();
-            textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, isIncrease ? (currentSize + px) : (currentSize - px));
-            if (getActivity() != null) {
-                SharedPreferences.Editor editor = getEditor(getActivity());
-                editor.putFloat(PlaceholderFragment.TEXT_VIEW_SIZE, textView.getTextSize());
-                editor.commit();
-            }
-        }
-    }
-
-    public static float getPx(Context activity, int value) {
-        Resources r = activity.getResources();
-        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, value, r.getDisplayMetrics());
     }
 
 

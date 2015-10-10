@@ -18,12 +18,28 @@ public class EbsalmodiaFragment extends MediaDetailFragment {
     }
 
     @Override
-    protected MediaContents getMediaContents() {
+    protected MediaContents getMediaContents(String language, String itemClicked) {
         return null;
     }
 
     @Override
+    protected String getItemAssetDirectory(int index) {
+        return null;
+    }
+
+
+    @Override
     public List<String> getBookContents(String selectedLanguge) {
         return null;
+    }
+
+    @Override
+    public List<Integer> getBookContentIconList() {
+        return null;
+    }
+
+    @Override
+    public String getTaskName() {
+        return "ebsalmodia";
     }
 }

@@ -51,13 +51,17 @@ public abstract class PlaceholderFragment extends Fragment {
     public static PlaceholderFragment newInstance(int sectionNumber, MediaContents data, int task) {
 
         PlaceholderFragment fragment = null;
+        Bundle args = new Bundle();
         switch (task) {
             case 0: {
                 fragment = new AgpeyaPlaceHolder();
+                args.putString(CONTENTS_DATA_ARRAY, data.getLanguageContentMediaList().get(sectionNumber).getContent());
+
             }
             break;
             case 1: {
                 fragment = new KholagyPlaceHolder();
+                args.put
             }
             break;
             case 2: {
@@ -65,9 +69,9 @@ public abstract class PlaceholderFragment extends Fragment {
             }
             break;
         }
-        Bundle args = new Bundle();
+
         args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-        args.putString(CONTENTS_DATA_ARRAY, data.getLanguageContentMediaList().get(sectionNumber).getContent());
+
         if (fragment != null) {
             fragment.setArguments(args);
         }

@@ -15,7 +15,7 @@ import baselyous.com.copticsmedia.mediaTasks.tasks.PlaceholderFragment;
  */
 public class KholagyPlaceHolder extends PlaceholderFragment {
 
-    private TextView arabicTextView;
+ //   private TextView arabicTextView;
     private TextView copticTextView;
     private TextView arabicCopticTextView;
 
@@ -26,16 +26,23 @@ public class KholagyPlaceHolder extends PlaceholderFragment {
 
     @Override
     public void updateChildViews(View rootView) {
-        arabicTextView = (TextView) rootView.findViewById(R.id.kholagy_arabic_text);
+//        arabicTextView = (TextView) rootView.findViewById(R.id.kholagy_arabic_text);
         copticTextView = (TextView) rootView.findViewById(R.id.kholagy_coptic_text);
         arabicCopticTextView = (TextView) rootView.findViewById(R.id.kholagy_arabic_coptic_text);
+
+        ImageView arabicImage = (ImageView) rootView.findViewById(R.id.kholagy_arabic_image);
 
         ImageView arabicMinimize = (ImageView) rootView.findViewById(R.id.kholagy_arabic_minimize);
         ImageView copticMinimize = (ImageView) rootView.findViewById(R.id.kholagy_coptic_minimize);
         ImageView arabicCopticMinimize = (ImageView) rootView.findViewById(R.id.kholagy_arabic_coptic_minimize);
-        arabicCopticMinimize.setOnClickListener(new MinimizeOnClickListener(arabicCopticTextView, arabicCopticMinimize));
+
+        arabicCopticMinimize.setOnClickListener(new MinimizeOnClickListener(arabicImage, arabicCopticMinimize));
         copticMinimize.setOnClickListener(new MinimizeOnClickListener(copticTextView, copticMinimize));
-        arabicMinimize.setOnClickListener(new MinimizeOnClickListener(arabicTextView, arabicMinimize));
+  //      arabicMinimize.setOnClickListener(new MinimizeOnClickListener(arabicTextView, arabicMinimize));
+
+
+
+
     }
 
     public SharedPreferences getPreferences() {

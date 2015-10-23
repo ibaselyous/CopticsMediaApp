@@ -1,5 +1,7 @@
 package baselyous.com.copticsmedia.mediaTasks.tasks;
 
+import android.graphics.drawable.Drawable;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +14,7 @@ public class Media {
 
     private String title;
     private String content;
+    private Drawable drawableContent;
     private List<String> contentList = new ArrayList<>();
 
     public String getTitle() {
@@ -40,5 +43,14 @@ public class Media {
 
     public void addToContentList(String phrase) {
         contentList.add(phrase);
+    }
+
+
+    public Drawable getDrawableContent() {
+        return drawableContent;
+    }
+
+    public void setDrawableContent(Drawable drawableContent) {
+        this.drawableContent = drawableContent;
     }
 }

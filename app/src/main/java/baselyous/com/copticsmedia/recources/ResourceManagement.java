@@ -2,6 +2,7 @@ package baselyous.com.copticsmedia.recources;
 
 import android.content.Context;
 import android.content.res.AssetManager;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 
 import java.io.BufferedReader;
@@ -26,12 +27,20 @@ public class ResourceManagement {
         AssetManager assets = context.getAssets();
         try {
 
-            String filePath = "" +
-                    (task.isEmpty() ? "" : task + "/") +
-                    (language.isEmpty() ? "" : language + "/") +
-                    (taskContentFolder.isEmpty() ? "" : taskContentFolder);
+/*            String filePath ="";
 
-            Log.i("reached get media ", filePath);
+            if (task.equals("agpeya")) {
+                filePath = getAgpeyaFilePath(language, taskContentFolder);
+            }
+            else if (task.equals("kholagy")){
+                filePath = getKholagyFilesPath(language, taskContentFolder);
+            }*/
+
+            String filePath = task + "/" +
+                    (language.isEmpty() ? "" : language + "/") +
+                    (taskContentFolder.isEmpty() ? "" : taskContentFolder) ;
+
+
             String[] list = assets.list(filePath);
             for (String fileName : list) {
                 if (!fileName.equals("salawat.txt")) {
@@ -39,7 +48,7 @@ public class ResourceManagement {
                     if (task.equals("agpeya")) {
                         getOneLangugeContents(contents, filePath, fileName, assets);
                     } else if (task.equals("kholagy")) {
-                        getCombinedLanguageContents(contents, filePath, fileName, assets);
+                        getCombinedLanguageContents(contents, filePath, fileName, assets, language);
                     }
                 }
             }
@@ -49,11 +58,55 @@ public class ResourceManagement {
         return contents;
     }
 
-    private static void getCombinedLanguageContents(MediaContents contents, String filePath, String fileName, AssetManager assets) throws IOException {
-        getOneLangugeContents(contents, filePath, fileName, assets);
-        contents.addToCopticMediaList(getMedia(filePath + "/coptic_" + fileName, assets));
-        contents.addToLanguageCopticCombinedMediaList(getMedia(filePath + "/combined_" + fileName, assets));
+    private static String getKholagyFilesPath(String language, String taskContentFolder) {
+
+        return null;
     }
+
+    public static String getAgpeyaFilePath (String language, String subTaskFolder){
+        return "agpeya/" +
+                (language.isEmpty() ? "" : language + "/") +
+                (subTaskFolder.isEmpty() ? "" : subTaskFolder) ;
+    }
+
+
+    private static void getCombinedLanguageContents(MediaContents contents, String filePath, String fileName, AssetManager assets, String language) throws IOException {
+        /*getOneLangugeContents(contents, filePath, fileName, assets);
+        contents.addToCopticMediaList(getMedia(filePath + "/coptic_" + fileName, assets));
+        contents.addToLanguageCopticCombinedMediaList(getMedia(filePath + "/combined_" + fileName, assets));*/
+        if(fileName.endsWith("_" + language + ".png")) {
+            contents.addToLanguageMediaList(getDrawableMedia(filePath + "/" + fileName, assets));
+        }
+        else if (fileName.endsWith("_" + language + "_coptics.png")) {
+            contents.addToLanguageCopticCombinedMediaList(getDrawableMedia(filePath + "/combined_" + fileName, assets));
+        }
+        else if (fileName.endsWith("_coptic.png")){
+            contents.addToCopticMediaList(getDrawableMedia(filePath + "/" + fileName, assets));
+        }
+    }
+
+    private static  Media getDrawableMedia (String filePath, AssetManager assets) {
+        InputStream ims = null;
+        try {
+            ims = assets.open(filePath);
+            Drawable d = Drawable.createFromStream(ims, null);
+            Media media = new Media() ;
+            media.setDrawableContent(d);
+            return media;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            if (ims != null){
+                try {
+                    ims.close();
+                } catch (IOException ignored) {
+
+                }
+            }
+        }
+        return null;
+    }
+
 
     private static Media getMedia(String filePath, AssetManager assets) {
         String str;

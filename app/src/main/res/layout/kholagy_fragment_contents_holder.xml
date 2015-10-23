@@ -42,10 +42,13 @@
             </LinearLayout>
 
             <ImageView
-                android:id="@+id/imageView3"
+                android:id="@+id/kholagy_arabic_image"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:contentDescription="@string/app_name" />
+                android:contentDescription="@string/app_name"
+                android:layout_below="@+id/linearLayout_arabic"
+                android:layout_centerHorizontal="true"
+                android:scaleType="center" />
 
             <TextView
                 android:id="@+id/kholagy_arabic_text"

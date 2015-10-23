@@ -1,4 +1,6 @@
-package baselyous.com.copticsmedia.mediaTasks.tasks.Agpeya;
+package baselyous.com.copticsmedia.mediaTasks.tasks.agpeya;
+
+import android.support.annotation.NonNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,10 +19,6 @@ public class AgpeyaFragment extends MediaDetailFragment {
     public static final String[] directoryList = new String[]{"paker", "third", "sixth", "nineth", "groob", "nom", "setar", "midnight_1", "midnight_2", "midnight_3"};
 
 
-    @Override
-    protected int getTask() {
-        return 0;
-    }
 
     @Override
     protected MediaContents getMediaContents(String language, String itemClicked) {
@@ -30,9 +28,20 @@ public class AgpeyaFragment extends MediaDetailFragment {
 
     }
 
+    @NonNull
+    @Override
+    public String getRootElement() {
+        return directoryList[0];
+    }
+
     @Override
     protected String getItemAssetDirectory(int index) {
         return directoryList[index];
+    }
+
+    @Override
+    protected int getTaskIndex() {
+        return 0;
     }
 
     @Override

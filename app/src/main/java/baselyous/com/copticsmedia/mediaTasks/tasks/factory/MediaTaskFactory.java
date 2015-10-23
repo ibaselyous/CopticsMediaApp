@@ -1,5 +1,6 @@
 package baselyous.com.copticsmedia.mediaTasks.tasks.factory;
 
+
 import baselyous.com.copticsmedia.mediaTasks.MediaDetailActivity;
 import baselyous.com.copticsmedia.mediaTasks.MediaDetailFragment;
 import baselyous.com.copticsmedia.mediaTasks.tasks.agpeya.AgpeyaDetailActivity;
@@ -11,7 +12,6 @@ import baselyous.com.copticsmedia.mediaTasks.tasks.kholagy.KholagyFragment;
 
 /**
  * Created by Ihab Baselyous on 03.10.2015.
- *
  */
 public class MediaTaskFactory {
     public static final int AGPEYA = 0;

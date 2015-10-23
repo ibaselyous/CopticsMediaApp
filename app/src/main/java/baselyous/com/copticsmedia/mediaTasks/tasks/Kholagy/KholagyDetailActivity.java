@@ -1,4 +1,4 @@
-package baselyous.com.copticsmedia.mediaTasks.tasks.Kholagy;
+package baselyous.com.copticsmedia.mediaTasks.tasks.kholagy;
 
 import android.support.v4.app.Fragment;
 

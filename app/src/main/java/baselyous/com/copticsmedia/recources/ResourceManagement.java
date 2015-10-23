@@ -30,30 +30,16 @@ public class ResourceManagement {
                     (task.isEmpty() ? "" : task + "/") +
                     (language.isEmpty() ? "" : language + "/") +
                     (taskContentFolder.isEmpty() ? "" : taskContentFolder);
+
             Log.i("reached get media ", filePath);
             String[] list = assets.list(filePath);
             for (String fileName : list) {
                 if (!fileName.equals("salawat.txt")) {
-                    InputStream is = assets.open(filePath + "/" + fileName);
-                    String str;
-                    try {
-                        Media media = new Media();
-                        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-                        StringBuilder content = new StringBuilder();
-                        String title = reader.readLine();
-                        media.setTitle(title);
-                        content.append(title).append("\n");
-                        while ((str = reader.readLine()) != null) {
-                            content.append(str).append("\n");
-                            media.addToContentList(str);
-                        }
-                        media.setContent(content.toString());
-                        contents.addToMediaList(media);
-                    } finally {
-                        try {
-                            is.close();
-                        } catch (Throwable ignore) {
-                        }
+
+                    if (task.equals("agpeya")) {
+                        getOneLangugeContents(contents, filePath, fileName, assets);
+                    } else if (task.equals("kholagy")) {
+                        getCombinedLanguageContents(contents, filePath, fileName, assets);
                     }
                 }
             }
@@ -61,6 +47,47 @@ public class ResourceManagement {
             e.printStackTrace();
         }
         return contents;
+    }
+
+    private static void getCombinedLanguageContents(MediaContents contents, String filePath, String fileName, AssetManager assets) throws IOException {
+        getOneLangugeContents(contents, filePath, fileName, assets);
+        contents.addToCopticMediaList(getMedia(filePath + "/coptic_" + fileName, assets));
+        contents.addToLanguageCopticCombinedMediaList(getMedia(filePath + "/combined_" + fileName, assets));
+    }
+
+    private static Media getMedia(String filePath, AssetManager assets) {
+        String str;
+        InputStream is = null;
+        try {
+            Media media = new Media();
+            is = assets.open(filePath);
+
+            BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+            StringBuilder content = new StringBuilder();
+            String title = reader.readLine();
+            media.setTitle(title);
+            content.append(title).append("\n");
+            while ((str = reader.readLine()) != null) {
+                content.append(str).append("\n");
+                media.addToContentList(str);
+            }
+            media.setContent(content.toString());
+
+        } catch (IOException ignored) {
+
+        } finally {
+            if (is != null) {
+                try {
+                    is.close();
+                } catch (IOException ignored) {
+                }
+            }
+        }
+        return null;
+    }
+
+    private static void getOneLangugeContents(MediaContents contents, String filePath, String fileName, AssetManager assets) throws IOException {
+        contents.addToLanguageMediaList(getMedia(filePath + "/" + fileName, assets));
     }
 
 

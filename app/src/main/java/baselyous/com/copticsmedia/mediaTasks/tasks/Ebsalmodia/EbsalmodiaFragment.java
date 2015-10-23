@@ -1,4 +1,6 @@
-package baselyous.com.copticsmedia.mediaTasks.tasks.Ebsalmodia;
+package baselyous.com.copticsmedia.mediaTasks.tasks.ebsalmodia;
+
+import android.support.annotation.NonNull;
 
 import java.util.List;
 
@@ -13,18 +15,24 @@ public class EbsalmodiaFragment extends MediaDetailFragment {
 
 
     @Override
-    protected int getTask() {
-        return 2;
+    protected MediaContents getMediaContents(String language, String itemClicked) {
+        return null;
     }
 
+    @NonNull
     @Override
-    protected MediaContents getMediaContents(String language, String itemClicked) {
+    public String getRootElement() {
         return null;
     }
 
     @Override
     protected String getItemAssetDirectory(int index) {
         return null;
+    }
+
+    @Override
+    protected int getTaskIndex() {
+        return 2;
     }
 
 

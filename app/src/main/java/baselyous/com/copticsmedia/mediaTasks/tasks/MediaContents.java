@@ -15,20 +15,46 @@ import java.util.List;
  */
 public class MediaContents {
 
-    private List<Media> mediaList = new ArrayList<>();
+    private List<Media> languageContentMediaList = new ArrayList<>(); //for arabic english german french
+    private List<Media> copticContentMediaList = new ArrayList<>();
+    private List<Media> languageCopticCombinedMediaList = new ArrayList<>();
     private List<String> titleList = new ArrayList<>();
 
-    public List<Media> getMediaList() {
-        return mediaList;
+    public List<Media> getCopticContentMediaList() {
+        return copticContentMediaList;
     }
 
-    public void setMediaList(List<Media> mediaList) {
-        this.mediaList = mediaList;
+    public void setCopticContentMediaList(List<Media> copticContentMediaList) {
+        this.copticContentMediaList = copticContentMediaList;
     }
 
-    public void addToMediaList(Media media) {
-        mediaList.add(media);
+    public List<Media> getLanguageCopticCombinedMediaList() {
+        return languageCopticCombinedMediaList;
+    }
+
+    public void setLanguageCopticCombinedMediaList(List<Media> languageCopticCombinedMediaList) {
+        this.languageCopticCombinedMediaList = languageCopticCombinedMediaList;
+    }
+
+    public List<Media> getLanguageContentMediaList() {
+        return languageContentMediaList;
+    }
+
+    public void setLanguageContentMediaList(List<Media> languageContentMediaList) {
+        this.languageContentMediaList = languageContentMediaList;
+    }
+
+    public void addToLanguageMediaList(Media media) {
+        languageContentMediaList.add(media);
         titleList.add(media.getTitle());
+    }
+
+    public void addToCopticMediaList(Media media) {
+        copticContentMediaList.add(media);
+    }
+
+    public void addToLanguageCopticCombinedMediaList(Media media) {
+        languageCopticCombinedMediaList.add(media);
     }
 
     public List<String> getTitleList() {

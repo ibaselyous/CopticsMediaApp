@@ -36,6 +36,9 @@ public abstract class PlaceholderFragment extends Fragment {
      */
     public static final String ARG_SECTION_NUMBER = "section_number";
     public static final String CONTENTS_DATA_ARRAY = "data_array";
+    public static final String CONTENTS_LANGUAGE_ARRAY = "LANGUAGE_ARRAY";
+    public static final String CONTENTS_COPTIC_ARRAY = "COPTIC_LANGUAGE_ARRAY";
+    public static final String CONTENTS_COMPINATION_ARRAY = "CONTENT_COMPINATION_ARRAY";
 
     private View rootView;
     private List<TextView> textViewList = new ArrayList<>();
@@ -61,7 +64,9 @@ public abstract class PlaceholderFragment extends Fragment {
             break;
             case 1: {
                 fragment = new KholagyPlaceHolder();
-                args.put
+                args.putByteArray(CONTENTS_LANGUAGE_ARRAY, data.getLanguageContentMediaList().get(sectionNumber).getDrawableContent());
+                args.putByteArray(CONTENTS_COPTIC_ARRAY, data.getLanguageContentMediaList().get(sectionNumber).getDrawableContent());
+                args.putByteArray(CONTENTS_COMPINATION_ARRAY, data.getLanguageContentMediaList().get(sectionNumber).getDrawableContent());
             }
             break;
             case 2: {

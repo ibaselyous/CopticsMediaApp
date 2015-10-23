@@ -2,10 +2,13 @@ package baselyous.com.copticsmedia.recources;
 
 import android.content.Context;
 import android.content.res.AssetManager;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -91,7 +94,11 @@ public class ResourceManagement {
             ims = assets.open(filePath);
             Drawable d = Drawable.createFromStream(ims, null);
             Media media = new Media() ;
-            media.setDrawableContent(d);
+            Bitmap bitmap = ((BitmapDrawable) d).getBitmap();
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 90, stream);
+            byte[] bitmapdata = stream.toByteArray();
+            media.setDrawableContent(bitmapdata);
             return media;
         } catch (IOException e) {
             e.printStackTrace();

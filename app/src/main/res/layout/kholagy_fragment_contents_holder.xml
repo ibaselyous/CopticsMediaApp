@@ -45,24 +45,10 @@
                 android:id="@+id/kholagy_arabic_image"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:contentDescription="@string/app_name"
                 android:layout_below="@+id/linearLayout_arabic"
                 android:layout_centerHorizontal="true"
+                android:contentDescription="@string/app_name"
                 android:scaleType="center" />
-
-            <TextView
-                android:id="@+id/kholagy_arabic_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignEnd="@+id/linearLayout_arabic"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_alignRight="@+id/linearLayout_arabic"
-                android:layout_below="@+id/linearLayout_arabic"
-                android:gravity="center"
-                android:text="@string/arabic"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textColor="#ff0000" />
 
         </RelativeLayout>
 
@@ -99,19 +85,13 @@
                     android:src="@drawable/minimize_mdpi" />
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/kholagy_coptic_text"
+            <ImageView
+                android:id="@+id/kholagy_coptic_image"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignEnd="@+id/linearLayout_coptic"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_alignRight="@+id/linearLayout_coptic"
                 android:layout_below="@+id/linearLayout_coptic"
-                android:gravity="center"
-                android:text="@string/coptic"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textColor="#ff0000" />
+                android:layout_centerHorizontal="true"
+                android:contentDescription="@string/app_name" />
 
         </RelativeLayout>
 
@@ -147,19 +127,14 @@
                     android:src="@drawable/minimize_mdpi" />
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/kholagy_arabic_coptic_text"
+            <ImageView
+                android:id="@+id/kholagy_arabic_coptic_image"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignEnd="@+id/linearLayout_arabic_coptic"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_alignRight="@+id/linearLayout_arabic_coptic"
+                android:layout_alignParentBottom="false"
                 android:layout_below="@+id/linearLayout_arabic_coptic"
-                android:gravity="center"
-                android:text="@string/arabic_coptic"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textColor="#ff0000" />
+                android:layout_centerHorizontal="true"
+                android:contentDescription="@string/app_name" />
 
         </RelativeLayout>
     </LinearLayout>

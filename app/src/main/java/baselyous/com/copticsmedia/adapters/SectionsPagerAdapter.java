@@ -22,24 +22,22 @@ import baselyous.com.copticsmedia.mediaTasks.tasks.PlaceholderFragment;
  */
 public class SectionsPagerAdapter extends FragmentStatePagerAdapter {
 
-    private final FragmentActivity activity;
-    private int task;
+
+    private final int task;
     private MediaContents mediaContents;
     private List<Fragment> fragmentStack = new Stack<>();
 
 
-    public SectionsPagerAdapter(FragmentActivity activity, int task, MediaContents mediaContents) {
+    public SectionsPagerAdapter(FragmentActivity activity, MediaContents mediaContents, int task) {
         super(activity.getSupportFragmentManager());
-        this.activity = activity;
-        this.task = task;
         this.mediaContents = mediaContents;
-
+        this.task = task;
     }
 
 
     @Override
     public Fragment getItem(int position) {
-        Fragment currentFragment = PlaceholderFragment.newInstance(position, mediaContents);
+        Fragment currentFragment = PlaceholderFragment.newInstance(position, mediaContents, task);
         fragmentStack.add(currentFragment);
         return currentFragment;
     }
@@ -47,8 +45,8 @@ public class SectionsPagerAdapter extends FragmentStatePagerAdapter {
     @Override
     public int getCount() {
         // Show 3 total pages.
-        if (mediaContents != null && !mediaContents.getMediaList().isEmpty())
-            return mediaContents.getMediaList().size();
+        if (mediaContents != null && !mediaContents.getLanguageContentMediaList().isEmpty())
+            return mediaContents.getLanguageContentMediaList().size();
         return 1;
     }
 

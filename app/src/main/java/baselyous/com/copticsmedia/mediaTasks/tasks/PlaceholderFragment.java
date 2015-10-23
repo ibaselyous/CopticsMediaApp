@@ -65,8 +65,8 @@ public abstract class PlaceholderFragment extends Fragment {
             case 1: {
                 fragment = new KholagyPlaceHolder();
                 args.putByteArray(CONTENTS_LANGUAGE_ARRAY, data.getLanguageContentMediaList().get(sectionNumber).getDrawableContent());
-                args.putByteArray(CONTENTS_COPTIC_ARRAY, data.getLanguageContentMediaList().get(sectionNumber).getDrawableContent());
-                args.putByteArray(CONTENTS_COMPINATION_ARRAY, data.getLanguageContentMediaList().get(sectionNumber).getDrawableContent());
+                args.putByteArray(CONTENTS_COPTIC_ARRAY, data.getCopticContentMediaList().get(sectionNumber).getDrawableContent());
+                args.putByteArray(CONTENTS_COMPINATION_ARRAY, data.getLanguageCopticCombinedMediaList().get(sectionNumber).getDrawableContent());
             }
             break;
             case 2: {

@@ -81,7 +81,7 @@ public class ResourceManagement {
             contents.addToLanguageMediaList(getDrawableMedia(filePath + "/" + fileName, assets));
         }
         else if (fileName.endsWith("_" + language + "_coptics.png")) {
-            contents.addToLanguageCopticCombinedMediaList(getDrawableMedia(filePath + "/combined_" + fileName, assets));
+            contents.addToLanguageCopticCombinedMediaList(getDrawableMedia(filePath + "/" + fileName, assets));
         }
         else if (fileName.endsWith("_coptic.png")){
             contents.addToCopticMediaList(getDrawableMedia(filePath + "/" + fileName, assets));

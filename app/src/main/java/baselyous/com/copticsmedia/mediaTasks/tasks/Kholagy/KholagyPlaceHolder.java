@@ -2,9 +2,11 @@ package baselyous.com.copticsmedia.mediaTasks.tasks.kholagy;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import baselyous.com.copticsmedia.R;
 import baselyous.com.copticsmedia.mediaTasks.tasks.PlaceholderFragment;
@@ -15,9 +17,10 @@ import baselyous.com.copticsmedia.mediaTasks.tasks.PlaceholderFragment;
  */
 public class KholagyPlaceHolder extends PlaceholderFragment {
 
- //   private TextView arabicTextView;
-    private TextView copticTextView;
-    private TextView arabicCopticTextView;
+
+    private ImageView copticImage;
+    private ImageView arabicCopticImage;
+    private ImageView arabicImage;
 
     @Override
     protected int getPlaceHolderLayoutResID() {
@@ -26,23 +29,35 @@ public class KholagyPlaceHolder extends PlaceholderFragment {
 
     @Override
     public void updateChildViews(View rootView) {
-//        arabicTextView = (TextView) rootView.findViewById(R.id.kholagy_arabic_text);
-        copticTextView = (TextView) rootView.findViewById(R.id.kholagy_coptic_text);
-        arabicCopticTextView = (TextView) rootView.findViewById(R.id.kholagy_arabic_coptic_text);
+        copticImage = (ImageView) rootView.findViewById(R.id.kholagy_coptic_image);
+        arabicCopticImage = (ImageView) rootView.findViewById(R.id.kholagy_arabic_coptic_image);
 
-        ImageView arabicImage = (ImageView) rootView.findViewById(R.id.kholagy_arabic_image);
+        arabicImage = (ImageView) rootView.findViewById(R.id.kholagy_arabic_image);
 
         ImageView arabicMinimize = (ImageView) rootView.findViewById(R.id.kholagy_arabic_minimize);
         ImageView copticMinimize = (ImageView) rootView.findViewById(R.id.kholagy_coptic_minimize);
+
         ImageView arabicCopticMinimize = (ImageView) rootView.findViewById(R.id.kholagy_arabic_coptic_minimize);
 
-        arabicCopticMinimize.setOnClickListener(new MinimizeOnClickListener(arabicImage, arabicCopticMinimize));
-        copticMinimize.setOnClickListener(new MinimizeOnClickListener(copticTextView, copticMinimize));
-  //      arabicMinimize.setOnClickListener(new MinimizeOnClickListener(arabicTextView, arabicMinimize));
+        arabicCopticMinimize.setOnClickListener(new MinimizeOnClickListener(arabicCopticImage, arabicCopticMinimize));
+        copticMinimize.setOnClickListener(new MinimizeOnClickListener(copticImage, copticMinimize));
+        arabicMinimize.setOnClickListener(new MinimizeOnClickListener(arabicImage, arabicMinimize));
+
+
+        setImageResource ( arabicImage, CONTENTS_LANGUAGE_ARRAY );
+        setImageResource ( arabicCopticImage, CONTENTS_COMPINATION_ARRAY);
+        setImageResource(copticImage, CONTENTS_COPTIC_ARRAY);
 
 
 
 
+    }
+
+    private void setImageResource(ImageView arabicImage, String contentsLanguageArray) {
+        Bundle extras = getArguments();
+        byte[] arabicArray = extras.getByteArray(contentsLanguageArray);
+        Bitmap arabicBitmap = BitmapFactory.decodeByteArray(arabicArray, 0, arabicArray.length);
+        arabicImage.setImageBitmap(arabicBitmap);
     }
 
     public SharedPreferences getPreferences() {

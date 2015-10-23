@@ -43,4 +43,7 @@
     <string name="please_select_your_language_preference">Please select your language preference</string>
     <string name="language">Language</string>
     <string name="update">Update</string>
+    <string name="arabic">Arabic</string>
+    <string name="coptic">Coptic</string>
+    <string name="arabic_coptic">Arabic-Coptic</string>
 </resources>

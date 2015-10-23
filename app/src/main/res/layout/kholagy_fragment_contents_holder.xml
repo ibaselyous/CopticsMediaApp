@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <RelativeLayout
+            android:id="@+id/kholagy_arabic_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:paddingTop="10dp">
+
+            <LinearLayout
+                android:id="@+id/linearLayout_arabic"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/kholagy_current_language"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/arabic"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                <ImageView
+                    android:id="@+id/kholagy_arabic_minimize"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:contentDescription="@string/app_name"
+                    android:src="@drawable/minimize_mdpi" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/app_name" />
+
+            <TextView
+                android:id="@+id/kholagy_arabic_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignEnd="@+id/linearLayout_arabic"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignRight="@+id/linearLayout_arabic"
+                android:layout_below="@+id/linearLayout_arabic"
+                android:gravity="center"
+                android:text="@string/arabic"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="#ff0000" />
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/kholagy_coptic_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:paddingTop="10dp">
+
+            <LinearLayout
+                android:id="@+id/linearLayout_coptic"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/kholagy_coptic_current_language"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/coptic"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                <ImageView
+                    android:id="@+id/kholagy_coptic_minimize"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:contentDescription="@string/app_name"
+                    android:src="@drawable/minimize_mdpi" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/kholagy_coptic_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignEnd="@+id/linearLayout_coptic"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignRight="@+id/linearLayout_coptic"
+                android:layout_below="@+id/linearLayout_coptic"
+                android:gravity="center"
+                android:text="@string/coptic"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="#ff0000" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/kholagy_arabic_coptic_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:paddingTop="10dp">
+
+            <LinearLayout
+                android:id="@+id/linearLayout_arabic_coptic"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/kholagy_arabic_coptic_current_language"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/arabic_coptic"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                <ImageView
+                    android:id="@+id/kholagy_arabic_coptic_minimize"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:contentDescription="@string/app_name"
+                    android:src="@drawable/minimize_mdpi" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/kholagy_arabic_coptic_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignEnd="@+id/linearLayout_arabic_coptic"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignRight="@+id/linearLayout_arabic_coptic"
+                android:layout_below="@+id/linearLayout_arabic_coptic"
+                android:gravity="center"
+                android:text="@string/arabic_coptic"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="#ff0000" />
+
+        </RelativeLayout>
+    </LinearLayout>
+    <!-- <FrameLayout
+         android:layout_width="wrap_content"
+         android:layout_height="match_parent"
+         android:layout_gravity="left|top"
+         android:fitsSystemWindows="true">
+
+     <include layout="@layout/content_contols" />
+
+     </FrameLayout>-->
+</RelativeLayout>

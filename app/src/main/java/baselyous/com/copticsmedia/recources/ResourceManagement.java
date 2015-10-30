@@ -5,6 +5,7 @@ import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 
 import java.io.BufferedReader;
@@ -30,28 +31,26 @@ public class ResourceManagement {
         AssetManager assets = context.getAssets();
         try {
 
-/*            String filePath ="";
+            String filePath = getFilePath(task, language, taskContentFolder);
 
-            if (task.equals("agpeya")) {
-                filePath = getAgpeyaFilePath(language, taskContentFolder);
-            }
-            else if (task.equals("kholagy")){
-                filePath = getKholagyFilesPath(language, taskContentFolder);
-            }*/
-
-            String filePath = task + "/" +
-                    (language.isEmpty() ? "" : language + "/") +
-                    (taskContentFolder.isEmpty() ? "" : taskContentFolder) ;
-
-
+            Log.i("filepath , " , " " + filePath);
             String[] list = assets.list(filePath);
+            if (task.equals("ebsalmodia")){
+                contents.setNumberOfPages(list.length / 6);
+                //getMediaContentsSizes(contents, filePath, fileName, assets, language);
+                //getEbsalmodiaContents(contents, filePath, fileName, assets, language);
+                //getCombinedLanguageContents(contents, filePath, fileName, assets, language);
+            }
             for (String fileName : list) {
                 if (!fileName.equals("salawat.txt")) {
-
                     if (task.equals("agpeya")) {
                         getOneLangugeContents(contents, filePath, fileName, assets);
                     } else if (task.equals("kholagy")) {
-                        getCombinedLanguageContents(contents, filePath, fileName, assets, language);
+                        //getCombinedLanguageContents(contents, filePath, fileName, assets, language);
+                    } else if (task.equals("ebsalmodia")){
+                       // getMediaContentsSizes(contents, filePath, fileName, assets, language);
+                        //getEbsalmodiaContents(contents, filePath, fileName, assets, language);
+                        //getCombinedLanguageContents(contents, filePath, fileName, assets, language);
                     }
                 }
             }
@@ -61,39 +60,62 @@ public class ResourceManagement {
         return contents;
     }
 
-    private static String getKholagyFilesPath(String language, String taskContentFolder) {
+    private static void getMediaContentsSizes(MediaContents contents, String filePath, String fileName, AssetManager assets, String language) {
 
-        return null;
     }
 
-    public static String getAgpeyaFilePath (String language, String subTaskFolder){
-        return "agpeya/" +
-                (language.isEmpty() ? "" : language + "/") +
-                (subTaskFolder.isEmpty() ? "" : subTaskFolder) ;
+    public static String getFilePath(String task, String language, String taskContentFolder) {
+        return task + "/" +
+                (task.equals("ebsalmodia") ? "" : language.isEmpty() ? "" : language + "/") +
+                (taskContentFolder.isEmpty() ? "" : taskContentFolder);
+    }
+
+    private static void getEbsalmodiaContents(Context context, String taskContentFolder, String language, int index) throws IOException {
+        MediaContents contents = new MediaContents();
+        AssetManager assets = context.getAssets();
+        String filePath = getFilePath("ebsalmodia", language, taskContentFolder);
+
+        Log.i("filepath , " , " " + filePath);
+        String[] list = assets.list(filePath);
+        String indexString = index < 10 ? "_0"+ (index + 1):"_" + (index + 1);
+
+        for (String fileName : list) {
+            if (!fileName.equals("salawat.txt")) {
+                if (fileName.endsWith(indexString + "_" + language + ".PNG")) {
+                    contents.addToLanguageMediaList(getDrawableMedia(filePath + "/" + fileName, assets));
+                } else if (fileName.endsWith(indexString + "_" + language + "_coptic.PNG")) {
+                    contents.addToLanguageCopticCombinedMediaList(getDrawableMedia(filePath + "/" + fileName, assets));
+                } else if (fileName.endsWith(indexString + "_coptic.PNG")) {
+                    contents.addToCopticMediaList(getDrawableMedia(filePath + "/" + fileName, assets));
+                }
+                    //getEbsalmodiaContents(contents, filePath, fileName, assets, language);
+                    //getCombinedLanguageContents(contents, filePath, fileName, assets, language);
+
+            }
+        }
     }
 
 
-    private static void getCombinedLanguageContents(MediaContents contents, String filePath, String fileName, AssetManager assets, String language) throws IOException {
+    private static void getCombinedLanguageContents(MediaContents contents, String filePath, String fileName, AssetManager assets, String language, int index) throws IOException {
         /*getOneLangugeContents(contents, filePath, fileName, assets);
         contents.addToCopticMediaList(getMedia(filePath + "/coptic_" + fileName, assets));
         contents.addToLanguageCopticCombinedMediaList(getMedia(filePath + "/combined_" + fileName, assets));*/
-        if(fileName.endsWith("_" + language + ".png")) {
+        Log.i("file name ", filePath + "" + fileName);
+        if (fileName.endsWith("_" + language + ".PNG")) {
             contents.addToLanguageMediaList(getDrawableMedia(filePath + "/" + fileName, assets));
-        }
-        else if (fileName.endsWith("_" + language + "_coptics.png")) {
+        } else if (fileName.endsWith("_" + language + "_coptic.PNG")) {
             contents.addToLanguageCopticCombinedMediaList(getDrawableMedia(filePath + "/" + fileName, assets));
-        }
-        else if (fileName.endsWith("_coptic.png")){
+        } else if (fileName.endsWith("_coptic.PNG")) {
             contents.addToCopticMediaList(getDrawableMedia(filePath + "/" + fileName, assets));
         }
     }
 
-    private static  Media getDrawableMedia (String filePath, AssetManager assets) {
+    private static Media getDrawableMedia(String filePath, AssetManager assets) {
         InputStream ims = null;
         try {
             ims = assets.open(filePath);
             Drawable d = Drawable.createFromStream(ims, null);
-            Media media = new Media() ;
+            Media media = new Media();
             Bitmap bitmap = ((BitmapDrawable) d).getBitmap();
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             bitmap.compress(Bitmap.CompressFormat.PNG, 90, stream);
@@ -102,8 +124,8 @@ public class ResourceManagement {
             return media;
         } catch (IOException e) {
             e.printStackTrace();
-        }finally {
-            if (ims != null){
+        } finally {
+            if (ims != null) {
                 try {
                     ims.close();
                 } catch (IOException ignored) {
@@ -170,7 +192,7 @@ public class ResourceManagement {
 
             String filePath = "" +
                     (task.isEmpty() ? "" : task + "/") +
-                    (selectedLanguage.isEmpty() ? "" : selectedLanguage.toLowerCase() + "/") +
+                    (task.equals("ebsalmodia")? "" : selectedLanguage.isEmpty() ? "" : selectedLanguage.toLowerCase() + "/") +
                     (taskContentFolder.isEmpty() ? "" : taskContentFolder.toLowerCase() + "/") +
                     (taskFileName.isEmpty() ? "" : taskFileName.toLowerCase() + ".txt");
 
@@ -191,11 +213,103 @@ public class ResourceManagement {
 
                 }
             }
-        } catch (IOException e1) {
-            e1.printStackTrace();
+        } catch (IOException igonre) {
+            //e1.printStackTrace();
         }
         return contents;
     }
 
 
+
+
+
+
+
+
+    public static int getPrayNrOfPages(FragmentActivity activity,String book, String praySelected, String selectedLanguage) {
+
+        String filepath = getFilePath(book, selectedLanguage.toLowerCase(), praySelected);
+        AssetManager assets = activity.getAssets();
+        try {
+            return assets.list(filepath).length;
+        } catch (IOException ignore) {
+
+        }
+        return 0;
+    }
+
+    public static String getTextContent(String book, int pageNr, String praySelected, String language, FragmentActivity activity) {
+        AssetManager assets = activity.getAssets();
+        String filePath = getFilePath(book.toLowerCase(), language.toLowerCase(), praySelected);
+        Log.i("file path " , filePath);
+        String str;
+        InputStream is = null;
+        StringBuilder content = new StringBuilder();
+        try {
+            String[] list = assets.list(filePath);
+            String fileSelected = list[pageNr];
+            is = assets.open(filePath + "/" + fileSelected);
+
+            BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+
+            String title = reader.readLine();
+            content.append(title).append("\n");
+            while ((str = reader.readLine()) != null) {
+                content.append(str).append("\n");
+            }
+
+
+        } catch (IOException e) {
+            return "";
+        }finally {
+            try {
+                if(is != null){
+                    is.close();
+                }
+            } catch (Throwable ignore) {
+
+            }
+        }
+        return content.toString();
+    }
+
+    public static List<String> getPraySelectedPageTitleList(Context context, String book, String languageSelected, String praySelected) {
+        AssetManager assets = context.getAssets();
+        List<String> titleString = new ArrayList<>();
+        try {
+
+            String filePath = getFilePath(book, languageSelected, praySelected);
+            Log.i("filepath , " , " " + filePath);
+            String[] list = assets.list(filePath);
+
+            for (String fileName : list) {
+                if (!fileName.equals("salawat.txt")) {
+                    titleString .add(getTitle(filePath + "/" + fileName, assets));
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return titleString;
+    }
+
+    private static String getTitle(String filePath, AssetManager assets) {
+        InputStream is = null;
+        try {
+            is = assets.open(filePath);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+            return reader.readLine();
+        } catch (IOException ignored) {
+
+        } finally {
+            if (is != null) {
+                try {
+                    is.close();
+                } catch (IOException ignored) {
+
+                }
+            }
+        }
+        return "error...";
+    }
 }

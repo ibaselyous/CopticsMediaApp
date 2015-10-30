@@ -36,10 +36,10 @@
     <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_gravity="left|top"
-        android:fitsSystemWindows="true">
+        android:fitsSystemWindows="true"
+        android:id="@+id/taskContentController"
+        android:layout_gravity="bottom">
 
-        <include layout="@layout/content_contols" />
         <!--<RelativeLayout
             android:id="@+id/fullscreen_content_controls"
             android:layout_width="fill_parent"

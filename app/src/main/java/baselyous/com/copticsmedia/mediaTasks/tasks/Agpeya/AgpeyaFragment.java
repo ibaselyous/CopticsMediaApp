@@ -14,9 +14,11 @@ import baselyous.com.copticsmedia.recources.ResourceManagement;
  * Created by Ihab Baselyous on 03.10.2015.
  *
  */
-public class AgpeyaFragment extends MediaDetailFragment {
+public class AgpeyaFragment {
 
-    public static final String[] directoryList = new String[]{"paker", "third", "sixth", "nineth", "groob", "nom", "setar", "midnight_1", "midnight_2", "midnight_3"};
+}
+
+    /*public static final String[] directoryList = new String[]{"paker", "third", "sixth", "nineth", "groob", "nom", "setar", "midnight_1", "midnight_2", "midnight_3"};
 
 
 
@@ -75,3 +77,4 @@ public class AgpeyaFragment extends MediaDetailFragment {
 
 
 }
+*/

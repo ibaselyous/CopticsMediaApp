@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="agpeya_salawat_arabic">
+        <item>صلاة باكر</item>
+        <item> صلاة الساعة الثالثة</item>
+        <item >صلاة الساعة السادسة</item>
+        <item>صلاة الساعة التاسعة</item>
+        <item>صلاة الغروب</item>
+        <item>صلاة النوم</item>
+        <item>صلاةالستار</item>
+       <item> صلاة نصف الليل الخدمة الاولى</item>
+        <item >صلاة نصف الليل الخدمة الثاتية</item>
+        <item>صلاة نصف الليل الخدمة الثالثة</item>
+    </string-array>
+
+    <string-array name="agpeya_salawat_french">
+        <item>Prime</item>
+        <item>La Terce</item>
+        <item>La Sexte</item>
+        <item>La None</item>
+        <item>La Vesperal</item>
+        <item>Complies</item>
+        <item>voile</item>
+        <item>La Prière1</item>
+        <item>La Prière2</item>
+        <item>La Prière3</item>
+    </string-array>
+
+    <string-array name="agpeya_salawat_german">
+        <item>Gebet der ersten Stunde
+</item>
+        <item>Gebet der dritten Stunde
+</item>
+        <item>La Sexte</item>
+        <item>La None</item>
+        <item>La Vesperal</item>
+        <item>Complies</item>
+        <item>voile</item>
+        <item>La Prière1</item>
+        <item>La Prière2</item>
+        <item>La Prière3</item>
+    </string-array>
+
+</resources>

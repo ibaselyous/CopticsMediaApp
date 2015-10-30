@@ -12,6 +12,6 @@ public class AgpeyaDetailActivity extends MediaDetailActivity {
 
     @Override
     public Fragment getClickedFragment() {
-        return new AgpeyaFragment();
+        return null ; //new AgpeyaFragment();
     }
 }

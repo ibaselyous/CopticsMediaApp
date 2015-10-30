@@ -18,9 +18,9 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import baselyous.com.copticsmedia.mediaTasks.MediaDetailFragment;
-import baselyous.com.copticsmedia.mediaTasks.tasks.agpeya.AgpeyaPlaceHolder;
-import baselyous.com.copticsmedia.mediaTasks.tasks.ebsalmodia.EbsalmodiaPlaceHolder;
+import baselyous.com.copticsmedia.mediaTasks.tasks.agpeyaTask.AgpeyaPlaceHolder;
+import baselyous.com.copticsmedia.mediaTasks.tasks.agpeyaTask.AgpeyaPrayDetailFragment;
+import baselyous.com.copticsmedia.mediaTasks.tasks.ebsalmodiaTask.EbsalmodiaPlaceHolder;
 import baselyous.com.copticsmedia.mediaTasks.tasks.kholagy.KholagyPlaceHolder;
 
 /**
@@ -39,6 +39,8 @@ public abstract class PlaceholderFragment extends Fragment {
     public static final String CONTENTS_LANGUAGE_ARRAY = "LANGUAGE_ARRAY";
     public static final String CONTENTS_COPTIC_ARRAY = "COPTIC_LANGUAGE_ARRAY";
     public static final String CONTENTS_COMPINATION_ARRAY = "CONTENT_COMPINATION_ARRAY";
+    public static final String PRAY_SELECTED = "pray_selected";
+    public static final String LANGUAGE_SELECTED = "LANGUAGE_SELECTED";
 
     private View rootView;
     private List<TextView> textViewList = new ArrayList<>();
@@ -51,38 +53,6 @@ public abstract class PlaceholderFragment extends Fragment {
      * Returns a new instance of this fragment for the given section
      * number.
      */
-    public static PlaceholderFragment newInstance(int sectionNumber, MediaContents data, int task) {
-
-        PlaceholderFragment fragment = null;
-        Bundle args = new Bundle();
-        switch (task) {
-            case 0: {
-                fragment = new AgpeyaPlaceHolder();
-                args.putString(CONTENTS_DATA_ARRAY, data.getLanguageContentMediaList().get(sectionNumber).getContent());
-
-            }
-            break;
-            case 1: {
-                fragment = new KholagyPlaceHolder();
-                args.putByteArray(CONTENTS_LANGUAGE_ARRAY, data.getLanguageContentMediaList().get(sectionNumber).getDrawableContent());
-                args.putByteArray(CONTENTS_COPTIC_ARRAY, data.getCopticContentMediaList().get(sectionNumber).getDrawableContent());
-                args.putByteArray(CONTENTS_COMPINATION_ARRAY, data.getLanguageCopticCombinedMediaList().get(sectionNumber).getDrawableContent());
-            }
-            break;
-            case 2: {
-                fragment = new EbsalmodiaPlaceHolder();
-            }
-            break;
-        }
-
-        args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-
-        if (fragment != null) {
-            fragment.setArguments(args);
-        }
-
-        return fragment;
-    }
 
     public List<TextView> getTextViewList() {
         return textViewList;
@@ -110,23 +80,18 @@ public abstract class PlaceholderFragment extends Fragment {
     }
 
     private void initRootView() {
-        SharedPreferences myAppSharedPreferences = MediaDetailFragment.getMyAppSharedPreferences(getActivity());
+        SharedPreferences myAppSharedPreferences = TaskBaseDetailFragment.getMyAppSharedPreferences(getActivity());
         int color = myAppSharedPreferences.getInt(ROOT_VIEW_BACKGROUND_COLOR, Color.WHITE);
         rootView.setBackgroundColor(color);
     }
 
-    public List<TextView> getTextView() {
-        return textViewList;
-    }
-
-
     private void initializeTextView() {
-        SharedPreferences myAppSharedPreferences = MediaDetailFragment.getMyAppSharedPreferences(getActivity());
+        SharedPreferences myAppSharedPreferences = TaskBaseDetailFragment.getMyAppSharedPreferences(getActivity());
         int color = myAppSharedPreferences.getInt(TEXT_VIEW_COLOR, Color.BLACK);
         float size = myAppSharedPreferences.getFloat(TEXT_VIEW_SIZE, 24.0f);
         for (TextView textView : textViewList) {
             textView.setTextColor(color);
-            textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, size + MediaDetailFragment.getPx(getActivity(), 0));
+            textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, size + AgpeyaPrayDetailFragment.getPx(getActivity(), 0));
         }
     }
 
@@ -138,5 +103,34 @@ public abstract class PlaceholderFragment extends Fragment {
 
     public void setRootView(View rootView) {
         this.rootView = rootView;
+    }
+
+    public static PlaceholderFragment newInstance(int position, int taskIndex, String praySelected, String selectedLanguage) {
+        PlaceholderFragment fragment = null;
+        Bundle args = new Bundle();
+        args.putInt(ARG_SECTION_NUMBER, position);
+        args.putString(PRAY_SELECTED, praySelected);
+        args.putString(LANGUAGE_SELECTED, selectedLanguage);
+        switch (taskIndex) {
+            case 0: {
+                fragment = new AgpeyaPlaceHolder();
+            }
+            break;
+            case 1: {
+                fragment = new KholagyPlaceHolder();
+            }
+            break;
+            case 2: {
+                fragment = new EbsalmodiaPlaceHolder();
+            }
+            break;
+        }
+
+
+        if (fragment != null) {
+            fragment.setArguments(args);
+        }
+
+        return fragment;
     }
 }

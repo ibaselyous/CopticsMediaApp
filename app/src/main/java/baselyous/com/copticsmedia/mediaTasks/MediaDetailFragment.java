@@ -38,23 +38,41 @@ public abstract class MediaDetailFragment extends BaseTask {
     public static final String CONTROLLER_BACKGROUND_COLOR = "com.baselyous.copticMedia.shared.preferences.controller.view.background.color";
     private static final String IS_STARTED = "is_task_already_selected_and_no_need_to_start_it_again";
     private ViewPager mViewPager;
+    private ImageView previewControl;
+    private ImageView hideControl;
     private Spinner languageSpinner;
     private Spinner bookContentsSpinner;
     private Spinner bookSubContentsSpinner;
-    private View controlsView;
-    private ImageView previewControl;
-    private ImageView hideControl;
-    private TextView increaseFontsize;
-    private TextView decreaseFontsize;
-    private SectionsPagerAdapter mSectionsPagerAdapter;
     private ImageView sun;
     private ImageView moon;
     private ImageView updateContents;
+    private TextView increaseFontsize;
+    private TextView decreaseFontsize;
+    private View controlsView;
+    private SectionsPagerAdapter mSectionsPagerAdapter;
 
 
     public MediaDetailFragment() {
 
     }
+
+     /*
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View rootView = inflater.inflate(R.layout.activity_task_previewer, container, false);
+      getViews(rootView);
+       initController();
+        initSpinnersWithDefaults();
+        setOnSpinnerChangeListener();
+        setOnUpdateBtnClickListener();
+
+
+        setViewsOnClickListener();
+        return rootView;
+    }
+*/
+
 
     public static float getPx(Context activity, int value) {
         Resources r = activity.getResources();
@@ -114,9 +132,9 @@ public abstract class MediaDetailFragment extends BaseTask {
         //bookContentsSpinner.setSelection(index);
     }
 
-    private void updateContents(String defaultLanguage, String book) {
-        MediaContents contents = getMediaContents(defaultLanguage.toLowerCase(), book);
-        updateViewPagerContents(contents);
+    public void updateContents(String defaultLanguage, String folderInBook) { // this could be baker, ton seno, ...
+        MediaContents contents = getMediaContents(defaultLanguage.toLowerCase(), folderInBook);
+        updateViewPagerContents(contents, folderInBook);
         updateSpinners(defaultLanguage, contents);
     }
 
@@ -165,7 +183,7 @@ public abstract class MediaDetailFragment extends BaseTask {
             String[] languages = getResources().getStringArray(R.array.languages);
             ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(getActivity(), R.layout.spinner_custom_text, languages);
             languageSpinner.setAdapter(spinnerAdapter);
-           /* String defaultValue = MainActivityFragment.languageSelected(getActivity());*/
+            //* String defaultValue = MainActivityFragment.languageSelected(getActivity());*//*
             for (int i = 0; i < languages.length; i++) {
                 if (languageSpinner.getItemAtPosition(i).equals(defaultLanguage)) {
                     languageSpinner.setSelection(i);
@@ -182,13 +200,14 @@ public abstract class MediaDetailFragment extends BaseTask {
         }
     }
 
-    private void updateViewPagerContents(MediaContents contents) {
+    private void updateViewPagerContents(MediaContents contents, String folderInBook) {
         if (mSectionsPagerAdapter != null) {
             mSectionsPagerAdapter = null;
             mViewPager.setAdapter(null);
         }
 
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getActivity(), contents, getTaskIndex());
+        mSectionsPagerAdapter = new SectionsPagerAdapter(getActivity(), contents, getTaskIndex(), folderInBook);
+        //mSectionsPagerAdapter = new SectionsPagerAdapter(getActivity(), getContentsSize(), getTaskIndex()); //Task index 0 for agpeya, 1 for kholagy, 2 for ebsalmodia
         mViewPager.setAdapter(mSectionsPagerAdapter);
         mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -210,20 +229,25 @@ public abstract class MediaDetailFragment extends BaseTask {
         mSectionsPagerAdapter.notifyDataSetChanged();
     }
 
+
     private void changeBookSubContentsSpinner(int position) {
         if (bookSubContentsSpinner != null)
             bookSubContentsSpinner.setSelection(position);
     }
 
     private void getViews(View rootView) {
+        mViewPager = (ViewPager) rootView.findViewById(R.id.fullscreen_content);
+        hideControl = (ImageView) rootView.findViewById(R.id.hideControls);
+        previewControl = (ImageView) rootView.findViewById(R.id.previewControl);
+
+
+
+
         controlsView = rootView.findViewById(R.id.fullscreen_content_controls);
         controlsView.setVisibility(View.INVISIBLE);
-        mViewPager = (ViewPager) rootView.findViewById(R.id.fullscreen_content);
         languageSpinner = (Spinner) rootView.findViewById(R.id.languageSpinner);
         bookContentsSpinner = (Spinner) rootView.findViewById(R.id.bookContents);
         bookSubContentsSpinner = (Spinner) rootView.findViewById(R.id.bookSubContents);
-        previewControl = (ImageView) rootView.findViewById(R.id.previewControl);
-        hideControl = (ImageView) rootView.findViewById(R.id.hideControls);
         sun = (ImageView) rootView.findViewById(R.id.light);
         moon = (ImageView) rootView.findViewById(R.id.dark);
         increaseFontsize = (TextView) rootView.findViewById(R.id.increaseFontSize);

@@ -46,4 +46,9 @@
     <string name="arabic">Arabic</string>
     <string name="coptic">Coptic</string>
     <string name="arabic_coptic">Arabic-Coptic</string>
+    <string name="title_activity_bible_detail">BibleDetailActivity</string>
+    <string name="title_agpeyapray_list">AgpeyaPrayes</string>
+    <string name="title_agpeyapray_detail">AgpeyaPray Detail</string>
+    <string name="title_ebsalmodiapray_list">EbsalmodiaPrays</string>
+    <string name="title_ebsalmodiapray_detail">EbsalmodiaPray Detail</string>
 </resources>

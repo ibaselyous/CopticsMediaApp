@@ -42,7 +42,6 @@ public class SectionsPagerAdapter extends FragmentStatePagerAdapter {
     }
 
     public SectionsPagerAdapter(FragmentActivity activity, int prayNrOfPages, int taskIndex, String praySelected, String selectedLanguage) {
-        //super(activity, prayNrOfPages, taskIndex, praySelected);
         super(activity.getSupportFragmentManager());
 
         this.prayNrOfPages = prayNrOfPages;
@@ -54,7 +53,6 @@ public class SectionsPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        //Fragment currentFragment = PlaceholderFragment.newInstance(position, mediaContents, taskIndex, praySelected);
         PlaceholderFragment currentFragment =  PlaceholderFragment.newInstance(position, taskIndex, praySelected, selectedLanguage);
         fragmentStack.add(currentFragment);
         return currentFragment;
@@ -62,18 +60,6 @@ public class SectionsPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount() {
-        // Show 3 total pages.
-        /*switch(taskIndex){
-            case 0 : {
-                if (mediaContents != null && !mediaContents.getLanguageContentMediaList().isEmpty()){
-                    return mediaContents.getLanguageContentMediaList().size();
-                }
-            }break;
-            case 1:
-            case 2: {
-                return mediaContents.getNumberOfPages();
-            }
-        }*/
 
         return prayNrOfPages;
     }

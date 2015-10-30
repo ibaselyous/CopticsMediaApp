@@ -70,30 +70,17 @@ public abstract class PlaceholderFragment extends Fragment {
         return rootView;
     }
 
+
+
     protected abstract int getPlaceHolderLayoutResID();
 
-    private void initViews(View rootView) {
-        setRootView(rootView);
+    public void initViews(View rootView) {
+
         updateChildViews(rootView);
-        initializeTextView();
-        initRootView();
+
     }
 
-    private void initRootView() {
-        SharedPreferences myAppSharedPreferences = TaskBaseDetailFragment.getMyAppSharedPreferences(getActivity());
-        int color = myAppSharedPreferences.getInt(ROOT_VIEW_BACKGROUND_COLOR, Color.WHITE);
-        rootView.setBackgroundColor(color);
-    }
 
-    private void initializeTextView() {
-        SharedPreferences myAppSharedPreferences = TaskBaseDetailFragment.getMyAppSharedPreferences(getActivity());
-        int color = myAppSharedPreferences.getInt(TEXT_VIEW_COLOR, Color.BLACK);
-        float size = myAppSharedPreferences.getFloat(TEXT_VIEW_SIZE, 24.0f);
-        for (TextView textView : textViewList) {
-            textView.setTextColor(color);
-            textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, size + AgpeyaPrayDetailFragment.getPx(getActivity(), 0));
-        }
-    }
 
     public abstract void updateChildViews(View rootView);
 

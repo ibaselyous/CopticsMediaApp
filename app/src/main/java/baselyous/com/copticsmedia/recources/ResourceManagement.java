@@ -8,16 +8,21 @@ import android.graphics.drawable.Drawable;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import baselyous.com.copticsmedia.mediaTasks.tasks.Media;
 import baselyous.com.copticsmedia.mediaTasks.tasks.MediaContents;
+import baselyous.com.copticsmedia.mediaTasks.tasks.ebsalmodiaTask.EbsalmodiaPlaceHolder;
+import baselyous.com.copticsmedia.mediaTasks.tasks.ebsalmodiaTask.util.ImageFetcher;
 
 /**
  * Created by Ihab Baselyous on 03.10.2015.
@@ -223,10 +228,28 @@ public class ResourceManagement {
 
 
 
+    public static int getEbsalmodiaPrayNrOfPages (FragmentActivity activity, String praySelected, String language){
+        String filePath = getFilePath("ebsalmodia", "", praySelected);
+        AssetManager assets = activity.getAssets();
+        try {
+            String[] list = assets.list(filePath);
+            for (String fileName : list) {
+                if (fileName.equals("count.txt")) {
+                    InputStream is = assets.open(filePath + "/" + fileName);
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+                    String str ;
+                    return Integer.parseInt((str = reader.readLine()) != null ? str : "0");
+                }
+            }
 
+        } catch (IOException ignore) {
 
+        }
+        return 0;
+    }
 
     public static int getPrayNrOfPages(FragmentActivity activity,String book, String praySelected, String selectedLanguage) {
+
 
         String filepath = getFilePath(book, selectedLanguage.toLowerCase(), praySelected);
         AssetManager assets = activity.getAssets();
@@ -311,5 +334,88 @@ public class ResourceManagement {
             }
         }
         return "error...";
+    }
+
+    public static byte[] getDrawableImageResource(Context context, String book, String praySelected, int index, String language, int forWhichCombination) {
+        AssetManager assets = context.getAssets();
+        String folderPath = getFilePath(book, language, praySelected);
+        String indexString = index < 10 ? "_0"+ (index + 1):"_" + (index + 1);
+        String filename = "" ;
+        switch (forWhichCombination) {
+            case EbsalmodiaPlaceHolder.ONLY_LANGUAGE: {
+                filename = indexString + "_" + language + ".PNG";
+            }
+            break;
+            case EbsalmodiaPlaceHolder.ONLY_COPTIC: {
+                filename = indexString + "_coptic.PNG";
+            }
+            break;
+            case EbsalmodiaPlaceHolder.LANGUAGE_COPTIC:{
+                filename = indexString + "_" + language + "_coptic.PNG";
+            }
+            break;
+        }
+        try {
+            InputStream is = assets.open(folderPath + "/" + filename);
+            Drawable d = Drawable.createFromStream(is, null);
+            Bitmap bitmap = ((BitmapDrawable) d).getBitmap();
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 90, stream);
+            return stream.toByteArray();
+
+        } catch (IOException ignore) {
+
+        }
+        return new byte[0];
+    }
+
+    public static Bitmap getBitmap(String data, Context context) {
+
+        AssetManager assets = context.getAssets();
+        try {
+            InputStream is = assets.open(data);
+            Drawable d = Drawable.createFromStream(is, null);
+            /*ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 90, stream);*/
+            return ((BitmapDrawable) d).getBitmap();
+
+        } catch (IOException ignore) {
+
+        }
+        return null;
+    }
+
+    public static boolean updateOutputStream(String urlString, OutputStream outputStream, Context context) {
+
+
+        BufferedOutputStream out = null;
+        BufferedInputStream in = null;
+
+        try {
+            Log.e("url string", urlString);
+            AssetManager assets = context.getAssets();
+            InputStream is = assets.open(urlString);
+            in = new BufferedInputStream(is, ImageFetcher.IO_BUFFER_SIZE);
+            out = new BufferedOutputStream(outputStream, ImageFetcher.IO_BUFFER_SIZE);
+
+            int b;
+            while ((b = in.read()) != -1) {
+                out.write(b);
+            }
+            return true;
+        } catch (final IOException e) {
+            //Log.e(TAG, "Error in downloadBitmap - " + e);
+        } finally {
+            try {
+                if (out != null) {
+                    out.close();
+                }
+                if (in != null) {
+                    in.close();
+                }
+            } catch (final IOException e) {
+            }
+        }
+        return false;
     }
 }

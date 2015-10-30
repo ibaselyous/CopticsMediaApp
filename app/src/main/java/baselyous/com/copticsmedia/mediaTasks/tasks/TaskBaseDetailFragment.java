@@ -27,6 +27,7 @@ public abstract class TaskBaseDetailFragment extends Fragment {
     private ViewPager mViewPager;
     private ImageView previewControl;
     private SectionsPagerAdapter mSectionsPagerAdapter;
+    public static Context currentContext ;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -34,11 +35,20 @@ public abstract class TaskBaseDetailFragment extends Fragment {
         return inflater.inflate(R.layout.activity_task_previewer, container, false);
     }
 
+
+
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        currentContext = getContext();
         findViews(view);
         updateViewPager(getFirstPrayInBook(), getLanguage());
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        currentContext = null;
     }
 
     private String getLanguage() {

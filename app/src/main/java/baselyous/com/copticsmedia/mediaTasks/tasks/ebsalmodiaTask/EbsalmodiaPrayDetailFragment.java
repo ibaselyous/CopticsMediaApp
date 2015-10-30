@@ -1,13 +1,7 @@
 package baselyous.com.copticsmedia.mediaTasks.tasks.ebsalmodiaTask;
 
-import android.app.Activity;
-import android.os.Bundle;
-import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
+import android.content.Context;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 
 import java.util.List;
 
@@ -23,24 +17,20 @@ import baselyous.com.copticsmedia.recources.ResourceManagement;
  * on handsets.
  */
 public class EbsalmodiaPrayDetailFragment extends TaskBaseDetailFragment implements ControllerFragmentBase.ViewControllerInterface {
-    /**
-     * The fragment argument representing the item ID that this fragment
-     * represents.
-     */
-    //public static final String ARG_ITEM_ID = "item_id";
-    private EbsalmodiaController controller ;
-    public static final String[] directoryList = new String[]{"tenseno"};
-    /**
-     * The dummy content this fragment is presenting.
-     */
 
+    private EbsalmodiaController controller;
+    public static final String[] directoryList = new String[]{"tenseno"};
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
     public EbsalmodiaPrayDetailFragment() {
+
     }
+
+
+
     @Override
     public void setControllerVisibility(int visibility) {
         controller.setControllerVisibility(visibility);
@@ -58,7 +48,7 @@ public class EbsalmodiaPrayDetailFragment extends TaskBaseDetailFragment impleme
 
     @Override
     protected int getPrayNrOfPages(String praySelected, String language) {
-        return ResourceManagement.getPrayNrOfPages(getActivity(), getString(R.string.ebsalmodia).toLowerCase(), praySelected, language);
+        return ResourceManagement.getEbsalmodiaPrayNrOfPages(getActivity(), praySelected, language.toLowerCase());
     }
 
     @Override
@@ -73,12 +63,12 @@ public class EbsalmodiaPrayDetailFragment extends TaskBaseDetailFragment impleme
 
     @Override
     public List<String> getBookContents(String selectedLanguage) {
-        return null;
+        return ResourceManagement.readTaskContentsFile(getActivity(),getString(R.string.ebsalmodia).toLowerCase(), selectedLanguage, "", "salawat");
     }
 
     @Override
     public void viewPreviewControlBtn() {
-
+        getPreviewControl().setVisibility(View.VISIBLE);
     }
 
     @Override

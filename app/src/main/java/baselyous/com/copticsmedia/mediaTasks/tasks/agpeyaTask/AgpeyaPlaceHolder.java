@@ -1,12 +1,16 @@
 package baselyous.com.copticsmedia.mediaTasks.tasks.agpeyaTask;
 
+import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.text.method.ScrollingMovementMethod;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.TextView;
 
 import baselyous.com.copticsmedia.R;
 import baselyous.com.copticsmedia.mediaTasks.tasks.PlaceholderFragment;
+import baselyous.com.copticsmedia.mediaTasks.tasks.TaskBaseDetailFragment;
 import baselyous.com.copticsmedia.recources.ResourceManagement;
 
 /**
@@ -15,6 +19,30 @@ import baselyous.com.copticsmedia.recources.ResourceManagement;
  */
 public class AgpeyaPlaceHolder extends PlaceholderFragment {
 
+
+    @Override
+    public void initViews(View rootView) {
+        setRootView(rootView);
+        updateChildViews(rootView);
+        initializeTextView();
+        initRootView(rootView);
+    }
+
+    private void initRootView(View rootView) {
+        SharedPreferences myAppSharedPreferences = TaskBaseDetailFragment.getMyAppSharedPreferences(getActivity());
+        int color = myAppSharedPreferences.getInt(ROOT_VIEW_BACKGROUND_COLOR, Color.WHITE);
+        rootView.setBackgroundColor(color);
+    }
+
+    private void initializeTextView() {
+        SharedPreferences myAppSharedPreferences = TaskBaseDetailFragment.getMyAppSharedPreferences(getActivity());
+        int color = myAppSharedPreferences.getInt(TEXT_VIEW_COLOR, Color.BLACK);
+        float size = myAppSharedPreferences.getFloat(TEXT_VIEW_SIZE, 24.0f);
+        for (TextView textView : getTextViewList()) {
+            textView.setTextColor(color);
+            textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, size + AgpeyaPrayDetailFragment.getPx(getActivity(), 0));
+        }
+    }
 
     @Override
     protected int getPlaceHolderLayoutResID() {

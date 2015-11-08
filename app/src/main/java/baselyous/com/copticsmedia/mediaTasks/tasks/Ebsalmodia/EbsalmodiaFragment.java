@@ -1,11 +1,15 @@
 package baselyous.com.copticsmedia.mediaTasks.tasks.ebsalmodia;
 
 import android.support.annotation.NonNull;
+import android.view.Menu;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import baselyous.com.copticsmedia.R;
 import baselyous.com.copticsmedia.mediaTasks.MediaDetailFragment;
 import baselyous.com.copticsmedia.mediaTasks.tasks.MediaContents;
+import baselyous.com.copticsmedia.recources.ResourceManagement;
 
 /**
  * Created by Ihab Baselyous on 03.10.2015.
@@ -13,41 +17,64 @@ import baselyous.com.copticsmedia.mediaTasks.tasks.MediaContents;
  */
 public class EbsalmodiaFragment extends MediaDetailFragment {
 
+    public static final String[] directoryList = new String[]{"tenseno"};//, "third", "sixth", "nineth", "groob", "nom", "setar", "midnight_1", "midnight_2", "midnight_3"};
 
-    @Override
+    //@Override
     protected MediaContents getMediaContents(String language, String itemClicked) {
-        return null;
+        return ResourceManagement.readMediaTaskContents(getActivity(), getTaskName(), language.toLowerCase(), itemClicked);
     }
 
-    @NonNull
-    @Override
+  /*  @NonNull
+    @Override*/
     public String getRootElement() {
-        return null;
+        return directoryList[0];
     }
 
-    @Override
+    /*@Override*/
     protected String getItemAssetDirectory(int index) {
-        return null;
+        return directoryList[index];
     }
 
-    @Override
+ //   @Override
     protected int getTaskIndex() {
         return 2;
     }
 
 
     @Override
+    protected void loadBookItemSelected(String language, String itemIndex, int index) {
+
+    }
+
+    @Override
     public List<String> getBookContents(String selectedLanguge) {
-        return null;
+        return ResourceManagement.readTaskContentsFile(getActivity(), getTaskName(), "", "", "salawat");
     }
 
     @Override
     public List<Integer> getBookContentIconList() {
-        return null;
+        List<Integer> iconList = new ArrayList<>();
+        iconList.add(R.drawable.kiama);
+        iconList.add(R.drawable.heilige_geist);
+        iconList.add(R.drawable.cross_way);
+        iconList.add(R.drawable.crossing);
+        iconList.add(R.drawable.jesus_down_of_the_cross_3);
+        iconList.add(R.drawable.jesus_in_the_grave);
+        iconList.add(R.drawable.jesus_walking_on_the_water);
+        iconList.add(R.drawable.virgin);
+        iconList.add(R.drawable.gulti_woman);
+        iconList.add(R.drawable.jesus_coming_);
+        return iconList;
     }
 
     @Override
     public String getTaskName() {
         return "ebsalmodia";
     }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+    }
+
 }

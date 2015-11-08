@@ -1,13 +1,18 @@
 package baselyous.com.copticsmedia.mediaTasks;
 
 
+import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import baselyous.com.copticsmedia.R;
+import baselyous.com.copticsmedia.mediaTasks.tasks.bible.BibleDetailActivity;
+import baselyous.com.copticsmedia.mediaTasks.tasks.bible.BibleDetailActivityFragment;
 import baselyous.com.copticsmedia.mediaTasks.tasks.factory.MediaTaskFactory;
 import baselyous.com.copticsmedia.preferences.LanguagePreference;
 
@@ -67,11 +72,16 @@ public class MediaListActivity extends ActionBarActivity
     @Override
     public void onItemSelected(int id) {
 
-        if (mTwoPane) {
+        FragmentActivity activity = MediaTaskFactory.getTask(id);
+        Log.i("reachege TB list activity sdfdfassdfdadfs ", "getActivity: " +activity.getClass().getName());
+        Intent detailIntent = new Intent(this, activity.getClass());
+        startActivity(detailIntent);
+        /*if (mTwoPane) {
             // In two-pane mode, show the detail view in this activity by
             // adding or replacing the detail fragment using a
             // fragment transaction.
 
+            //BibleDetailActivityFragment mediaInterface = new  BibleDetailActivityFragment();
             MediaDetailFragment mediaInterface = MediaTaskFactory.getFragment(id);
 
             getSupportFragmentManager().beginTransaction()
@@ -87,7 +97,7 @@ public class MediaListActivity extends ActionBarActivity
                 Intent detailIntent = new Intent(this, activity.getClass());
                 startActivity(detailIntent);
             }
-        }
+        }*/
     }
 
 

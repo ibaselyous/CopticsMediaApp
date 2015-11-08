@@ -19,6 +19,7 @@ public class MediaContents {
     private List<Media> copticContentMediaList = new ArrayList<>();
     private List<Media> languageCopticCombinedMediaList = new ArrayList<>();
     private List<String> titleList = new ArrayList<>();
+    private int numberOfPages;
 
     public List<Media> getCopticContentMediaList() {
         return copticContentMediaList;
@@ -63,5 +64,13 @@ public class MediaContents {
 
     public void setTitleList(List<String> titleList) {
         this.titleList = titleList;
+    }
+
+    public void setNumberOfPages(int numberOfPages) {
+        this.numberOfPages = numberOfPages;
+    }
+
+    public int getNumberOfPages() {
+        return numberOfPages;
     }
 }

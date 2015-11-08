@@ -21,25 +21,30 @@ public class KholagyFragment extends MediaDetailFragment {
             "_6_dawert_el_bekhor",  "_7_el_awashi",  "_8_kodas_baseli",  "_9_kodas_gergori",  "_10_kodas_kerolosi"
     };
 
-    @Override
+   // @Override
     protected MediaContents getMediaContents(String language, String itemClicked) {
         return ResourceManagement.readMediaTaskContents(getActivity(), getTaskName(), language.toLowerCase(), itemClicked);//itemClicked item from the directory list
     }
 
-    @NonNull
-    @Override
+    /*@NonNull
+    @Override*/
     public String getRootElement() {
         return directoryList[0];
     }
 
-    @Override
+   // @Override
     protected String getItemAssetDirectory(int index) {
         return directoryList[index];
     }
 
-    @Override
+   // @Override
     protected int getTaskIndex() {
         return 1;
+    }
+
+    @Override
+    protected void loadBookItemSelected(String language, String itemIndex, int index) {
+
     }
 
     @Override

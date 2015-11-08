@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer-array name="agpeya_icon_resources">
+        <item>@drawable/kiama</item>
+        <item>@drawable/heilige_geist</item>
+        <item>@drawable/cross_way</item>
+        <item>@drawable/crossing</item>
+        <item>@drawable/jesus_down_of_the_cross_3</item>
+        <item>@drawable/jesus_in_the_grave</item>
+        <item>@drawable/jesus_walking_on_the_water</item>
+        <item>@drawable/virgin</item>
+        <item>@drawable/gulti_woman</item>
+        <item>@drawable/jesus_coming_</item>
+    </integer-array>
+    
+</resources>

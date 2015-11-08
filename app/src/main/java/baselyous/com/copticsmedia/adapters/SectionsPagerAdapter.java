@@ -23,31 +23,45 @@ import baselyous.com.copticsmedia.mediaTasks.tasks.PlaceholderFragment;
 public class SectionsPagerAdapter extends FragmentStatePagerAdapter {
 
 
-    private final int task;
+
+    private final int prayNrOfPages;
+    private final int taskIndex;
+    private final String praySelected;
+    private final String selectedLanguage;
     private MediaContents mediaContents;
-    private List<Fragment> fragmentStack = new Stack<>();
+    private List<PlaceholderFragment> fragmentStack = new Stack<>();
 
 
-    public SectionsPagerAdapter(FragmentActivity activity, MediaContents mediaContents, int task) {
+    public SectionsPagerAdapter(FragmentActivity activity, MediaContents mediaContents, int task, String folderInBook) {
         super(activity.getSupportFragmentManager());
         this.mediaContents = mediaContents;
-        this.task = task;
+        this.prayNrOfPages = 0;
+        this.taskIndex = task;
+        this.praySelected = folderInBook;
+        selectedLanguage = null;
+    }
+
+    public SectionsPagerAdapter(FragmentActivity activity, int prayNrOfPages, int taskIndex, String praySelected, String selectedLanguage) {
+        super(activity.getSupportFragmentManager());
+
+        this.prayNrOfPages = prayNrOfPages;
+        this.taskIndex = taskIndex;
+        this.praySelected = praySelected;
+        this.selectedLanguage = selectedLanguage;
     }
 
 
     @Override
     public Fragment getItem(int position) {
-        Fragment currentFragment = PlaceholderFragment.newInstance(position, mediaContents, task);
+        PlaceholderFragment currentFragment =  PlaceholderFragment.newInstance(position, taskIndex, praySelected, selectedLanguage);
         fragmentStack.add(currentFragment);
         return currentFragment;
     }
 
     @Override
     public int getCount() {
-        // Show 3 total pages.
-        if (mediaContents != null && !mediaContents.getLanguageContentMediaList().isEmpty())
-            return mediaContents.getLanguageContentMediaList().size();
-        return 1;
+
+        return prayNrOfPages;
     }
 
     @Override
@@ -55,11 +69,11 @@ public class SectionsPagerAdapter extends FragmentStatePagerAdapter {
         if (mediaContents != null && mediaContents.getTitleList() != null && !mediaContents.getTitleList().isEmpty())
             return mediaContents.getTitleList().get(position);
 
-        return null;
+        return "title";
     }
 
 
-    public List<Fragment> getFragmentStack() {
+    public List<PlaceholderFragment> getFragmentStack() {
         return fragmentStack;
     }
 }

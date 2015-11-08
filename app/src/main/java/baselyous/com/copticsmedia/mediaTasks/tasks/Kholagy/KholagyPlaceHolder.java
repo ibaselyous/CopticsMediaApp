@@ -23,6 +23,11 @@ public class KholagyPlaceHolder extends PlaceholderFragment {
     private ImageView arabicImage;
 
     @Override
+    public void initViews(View rootView) {
+
+    }
+
+    @Override
     protected int getPlaceHolderLayoutResID() {
         return R.layout.kholagy_fragment_contents_holder;
     }

@@ -57,7 +57,7 @@ public class MediaListFragment extends ListFragment {
         super.onCreate(savedInstanceState);
 
         // TODO: replace with a real list adapter.
-        TaskListAdapter adapter = new TaskListAdapter(TaskList.getTaskList(getActivity()), getActivity(), false);
+        TaskListAdapter adapter = new TaskListAdapter(TaskList.getTaskList(getActivity()), getActivity() );
         setListAdapter(adapter);
     }
 

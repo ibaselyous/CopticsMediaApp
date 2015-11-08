@@ -2,15 +2,18 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="baselyous.com.copticsmedia" >
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:largeHeap="true"
         android:theme="@style/AppTheme" >
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -20,7 +23,7 @@
         <activity
             android:name=".mediaTasks.MediaListActivity"
             android:label="@string/title_media_list"
-            android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar" >
         </activity>
         <!--
         <activity
@@ -41,8 +44,39 @@
         <activity
             android:name=".mediaTasks.tasks.kholagy.KholagyDetailActivity"
             android:label="@string/kholagy" />
-        <activity android:name=".mediaTasks.TaskContentSelector" />
         <activity android:name=".preferences.LanguagePreference" />
+        <activity
+            android:name=".mediaTasks.tasks.bible.BibleDetailActivity"
+            android:label="@string/title_activity_bible_detail" >
+        </activity>
+        <activity
+            android:name=".mediaTasks.tasks.agpeyaTask.AgpeyaPrayListActivity"
+            android:label="@string/title_agpeyapray_list"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
+        <activity
+            android:name=".mediaTasks.tasks.agpeyaTask.AgpeyaPrayDetailActivity"
+            android:label="@string/title_agpeyapray_detail"
+            android:theme="@style/AppTheme.NoActionBar" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="baselyous.com.copticsmedia.mediaTasks.tasks.agpeyaTask.AgpeyaPrayListActivity" />
+        </activity>
+        <activity
+            android:name=".mediaTasks.tasks.ebsalmodiaTask.EbsalmodiaPrayListActivity"
+            android:label="@string/title_ebsalmodiapray_list"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
+        <activity
+            android:name=".mediaTasks.tasks.ebsalmodiaTask.EbsalmodiaPrayDetailActivity"
+            android:label="@string/title_ebsalmodiapray_detail"
+
+            android:parentActivityName=".mediaTasks.tasks.ebsalmodiaTask.EbsalmodiaPrayListActivity"
+            android:theme="@style/AppTheme.NoActionBar" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="baselyous.com.copticsmedia.mediaTasks.tasks.ebsalmodiaTask.EbsalmodiaPrayListActivity" />
+        </activity>
     </application>
 
 </manifest>

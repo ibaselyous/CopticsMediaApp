@@ -34,7 +34,7 @@ public class TaskContentSelector extends ListActivity {
             if (intent.hasExtra("task")) {
                 String task = intent.getExtras().getString("task");
                 if (task != null && task.equals("agpeya")) {
-                    TaskListAdapter adapter = new TaskListAdapter(getTaskList(intent.getIntegerArrayListExtra("icons")), getApplicationContext());
+                    TaskListAdapter adapter = new TaskListAdapter(getTaskList(intent.getIntegerArrayListExtra("icons")), getApplicationContext(), true);
                     setListAdapter(adapter);
                 } else {
                     ArrayAdapter<String> adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1, contentList);

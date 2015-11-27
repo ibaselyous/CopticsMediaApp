@@ -22,18 +22,14 @@ import baselyous.com.copticsmedia.mediaTasks.tasks.PlaceholderFragment;
  */
 public class SectionsPagerAdapter extends FragmentStatePagerAdapter {
 
-    private final FragmentActivity activity;
-    private int task;
+
     private MediaContents mediaContents;
     private List<Fragment> fragmentStack = new Stack<>();
 
 
-    public SectionsPagerAdapter(FragmentActivity activity, int task, MediaContents mediaContents) {
+    public SectionsPagerAdapter(FragmentActivity activity, MediaContents mediaContents) {
         super(activity.getSupportFragmentManager());
-        this.activity = activity;
-        this.task = task;
         this.mediaContents = mediaContents;
-
     }
 
 

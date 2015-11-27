@@ -1,4 +1,4 @@
-package baselyous.com.copticsmedia.mediaTasks.tasks.Ebsalmodia;
+package baselyous.com.copticsmedia.mediaTasks.tasks.ebsalmodia;
 
 import android.support.v4.app.Fragment;
 

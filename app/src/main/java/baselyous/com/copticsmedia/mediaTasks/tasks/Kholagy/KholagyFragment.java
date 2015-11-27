@@ -1,4 +1,4 @@
-package baselyous.com.copticsmedia.mediaTasks.tasks.Kholagy;
+package baselyous.com.copticsmedia.mediaTasks.tasks.kholagy;
 
 import java.util.List;
 
@@ -10,10 +10,6 @@ import baselyous.com.copticsmedia.mediaTasks.tasks.MediaContents;
  *
  */
 public class KholagyFragment extends MediaDetailFragment {
-    @Override
-    protected int getTask() {
-        return 1;
-    }
 
     @Override
     protected MediaContents getMediaContents(String language, String itemClicked) {

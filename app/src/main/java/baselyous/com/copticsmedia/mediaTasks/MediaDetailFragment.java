@@ -47,7 +47,7 @@ public abstract class MediaDetailFragment extends BaseTask {
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ImageView sun;
     private ImageView moon;
-    private TextView updateContents;
+    private ImageView updateContents;
 
 
     public MediaDetailFragment() {
@@ -64,7 +64,6 @@ public abstract class MediaDetailFragment extends BaseTask {
      * fragment (e.g. upon screen orientation changes).
      */
 
-    protected abstract int getTask();
 
     protected abstract MediaContents getMediaContents(String language, String itemClicked);
 
@@ -77,6 +76,7 @@ public abstract class MediaDetailFragment extends BaseTask {
         initSpinnersWithDefaults();
         setOnSpinnerChangeListener();
         setOnUpdateBtnClickListener();
+        setViewsOnClickListener();
         return rootView;
     }
 
@@ -102,7 +102,7 @@ public abstract class MediaDetailFragment extends BaseTask {
     private void updateContents(String defaultLanguage, String book) {
         MediaContents contents = getMediaContents(defaultLanguage.toLowerCase(), book);
         updateViewPagerContents(contents);
-        updateSpinners(contents);
+        updateSpinners(defaultLanguage, contents);
     }
 
     private void setOnSpinnerChangeListener() {
@@ -131,9 +131,9 @@ public abstract class MediaDetailFragment extends BaseTask {
         });
     }
 
-    private void updateSpinners(MediaContents contents) {
-        updateLanguageSpinner();
-        updateBookSpinner(getBookContents((String) languageSpinner.getSelectedItem()));
+    private void updateSpinners(String defaultLanguage, MediaContents contents) {
+        updateLanguageSpinner(defaultLanguage);
+        updateBookSpinner(getBookContents(defaultLanguage));
         updateBookSubContents(contents);
     }
 
@@ -145,14 +145,14 @@ public abstract class MediaDetailFragment extends BaseTask {
         }
     }
 
-    private void updateLanguageSpinner() {
+    private void updateLanguageSpinner(String defaultLanguage) {
         if (languageSpinner != null) {
             String[] languages = getResources().getStringArray(R.array.languages);
             ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(getActivity(), R.layout.spinner_custom_text, languages);
             languageSpinner.setAdapter(spinnerAdapter);
-            String defaultValue = MainActivityFragment.languageSelected(getActivity());
+           /* String defaultValue = MainActivityFragment.languageSelected(getActivity());*/
             for (int i = 0; i < languages.length; i++) {
-                if (languageSpinner.getItemAtPosition(i).equals(defaultValue)) {
+                if (languageSpinner.getItemAtPosition(i).equals(defaultLanguage)) {
                     languageSpinner.setSelection(i);
                 }
             }
@@ -163,6 +163,7 @@ public abstract class MediaDetailFragment extends BaseTask {
         if (bookContentsSpinner != null) {
             ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(getActivity(), R.layout.spinner_custom_text, bookContents);
             bookContentsSpinner.setAdapter(spinnerAdapter);
+
         }
     }
 
@@ -172,7 +173,7 @@ public abstract class MediaDetailFragment extends BaseTask {
             mViewPager.setAdapter(null);
         }
 
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getActivity(), getTask(), contents);
+        mSectionsPagerAdapter = new SectionsPagerAdapter(getActivity(), contents);
         mViewPager.setAdapter(mSectionsPagerAdapter);
         mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -212,8 +213,8 @@ public abstract class MediaDetailFragment extends BaseTask {
         moon = (ImageView) rootView.findViewById(R.id.dark);
         increaseFontsize = (TextView) rootView.findViewById(R.id.increaseFontSize);
         decreaseFontsize = (TextView) rootView.findViewById(R.id.decreaseFontSize);
-        updateContents = (TextView) rootView.findViewById(R.id.updateContents);
-        setViewsOnClickListener();
+        updateContents = (ImageView) rootView.findViewById(R.id.updateContents);
+
 
     }
 
@@ -233,22 +234,22 @@ public abstract class MediaDetailFragment extends BaseTask {
     }
 
     private void changeTextColorAndBackground(boolean value) {
-        Fragment fragment = mSectionsPagerAdapter.getFragmentStack().get(mViewPager.getCurrentItem());
-        TextView textView = ((PlaceholderFragment) fragment).getTextView();
-        View rootView = ((PlaceholderFragment) fragment).getRootView();
-        textView.setTextColor(value ? Color.WHITE : Color.BLACK);
-        rootView.setBackgroundColor(value ? Color.BLACK : Color.WHITE);
-        controlsView.setBackgroundResource(value ? R.drawable.gradient_light : R.drawable.gradient);
+
+        for (Fragment fragment : mSectionsPagerAdapter.getFragmentStack()) {
+            TextView textView = ((PlaceholderFragment) fragment).getTextView();
+            View rootView = ((PlaceholderFragment) fragment).getRootView();
+            textView.setTextColor(value ? Color.WHITE : Color.BLACK);
+            rootView.setBackgroundColor(value ? Color.BLACK : Color.WHITE);
+            controlsView.setBackgroundResource(value ? R.drawable.gradient_light : R.drawable.gradient);
+        }
 
         if (getActivity() != null) {
             SharedPreferences.Editor editor = getEditor(getActivity());
             editor.putInt(PlaceholderFragment.TEXT_VIEW_COLOR, value ? Color.WHITE : Color.BLACK);
             editor.putInt(PlaceholderFragment.ROOT_VIEW_BACKGROUND_COLOR, value ? Color.BLACK : Color.WHITE);
             editor.putInt(CONTROLLER_BACKGROUND_COLOR, value ? R.drawable.gradient_light : R.drawable.gradient);
-
             editor.commit();
         }
-
 
     }
 

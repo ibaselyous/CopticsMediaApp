@@ -1,10 +1,10 @@
-﻿Prime
-La Terce
-La Sexte
-La None
-La Vesperal
-Complies
-voile
-La Prière1
-La Prière2
-La Prière3
+﻿Gebet der ersten Stunde
+Gebet der dritten Stunde
+Gebet der sechsten Stunde
+Gebet der neunten Stunde
+Gebet der elften Stunde
+Gebet der zwölften Stunde
+Gebet insbesondere für Mönche
+Mitternachtsgebet erste Andacht
+Mitternachtsgebet zweite Andacht
+Mitternachtsgebet dritte Andacht
